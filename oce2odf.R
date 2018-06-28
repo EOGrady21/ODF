@@ -272,12 +272,12 @@ oce2odf <- function(obj, write = TRUE){
       #write odf sturctures to odf files
   #doesn't work --- line formatting issue, not skipping to new line
     if (write == TRUE){
-    ptm <- proc.time()
+   
     for(d in 1:length(obj[['distance']])){
     write_odf( b[[d]],   output_file =paste0(b[[d]]$ODF_HEADER$FILE_SPECIFICATION))
       print(d)
     }
-    proc.time - ptm
+    
     } else{
       return(b)
       print('ODF object ready, please choose bins to export.')
