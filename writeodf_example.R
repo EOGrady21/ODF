@@ -12,6 +12,7 @@ source('R:/Shared/ChisholmE/ODF_R/oce2odf.R')
 
 
 obj <- adpClean
+obj <- oceSetMetadata(obj, 'event_comments', 'WRITE EVENT COMMENTS HERE')
 
 oce2odf(obj = obj, write = TRUE)
 
