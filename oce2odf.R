@@ -38,9 +38,9 @@ oce2odfHeader <- function(obj){
   b <- gen_odfstruct()
   
   if (inherits(obj) == 'adp'){
-    for ( d in 1:length(obj[['distance']])){
-    b$ODF_HEADER$FILE_SPECIFICATION <- paste('MADCPS', '_', obj[['cruise_number']], '_', obj[['mooring_number']], '_', obj[['serial_number']] , '-', obj[['sensor_depth']] - obj[['distance']][[d]], '.ODF', sep = '')
-    }
+    # for ( d in 1:length(obj[['distance']])){
+    # b$ODF_HEADER$FILE_SPECIFICATION <- paste('MADCPS', '_', obj[['cruise_number']], '_', obj[['mooring_number']], '_', obj[['serial_number']] , '-', obj[['sensor_depth']] - obj[['distance']][[d]], '.ODF', sep = '')
+    # }
     b$CRUISE_HEADER$COUNTRY_INSTITUTE_CODE <- obj[['country_code']]
     b$CRUISE_HEADER$CRUISE_NUMBER <- obj[['cruise_number']]
     b$CRUISE_HEADER$ORGANIZATION <- obj[['organization']]
@@ -54,8 +54,8 @@ oce2odfHeader <- function(obj){
     
     b$EVENT_HEADER$DATA_TYPE <- obj[['data_type']]
     b$EVENT_HEADER$EVENT_NUMBER <- obj[['mooring_number']]
-    b$EVENT_HEADER$EVENT_QUALIFIER1 <- obj[['']]
-    b$EVENT_HEADER$EVENT_QUALIFIER2 <- obj[['']]
+    b$EVENT_HEADER$EVENT_QUALIFIER1 <- ''
+    b$EVENT_HEADER$EVENT_QUALIFIER2 <- ''
     b$EVENT_HEADER$CREATION_DATE <- Sys.Date()
     b$EVENT_HEADER$ORIG_CREATION_DATE <- obj[['date_created']]
     b$EVENT_HEADER$START_DATE_TIME <- obj[['time_coverage_start']]
@@ -229,8 +229,8 @@ oce2odf <- function(obj, write = TRUE){
         
         b[[d]]$EVENT_HEADER$DATA_TYPE <- obj[['data_type']]
         b[[d]]$EVENT_HEADER$EVENT_NUMBER <- obj[['mooring_number']]
-        b[[d]]$EVENT_HEADER$EVENT_QUALIFIER1 <- obj[['']]
-        b[[d]]$EVENT_HEADER$EVENT_QUALIFIER2 <- obj[['']]
+        b[[d]]$EVENT_HEADER$EVENT_QUALIFIER1 <- paste0(obj[['serialNumber']], round(obj[['depthMean']] - obj[['distance']][[d]], digits = 0), sep = '-' )
+        b[[d]]$EVENT_HEADER$EVENT_QUALIFIER2 <- obj[['sampling_interval']]
         b[[d]]$EVENT_HEADER$CREATION_DATE <- Sys.Date()
         b[[d]]$EVENT_HEADER$ORIG_CREATION_DATE <- obj[['date_created']]
         b[[d]]$EVENT_HEADER$START_DATE_TIME <- obj[['time_coverage_start']]
@@ -239,12 +239,12 @@ oce2odf <- function(obj, write = TRUE){
         b[[d]]$EVENT_HEADER$INITIAL_LONGITUDE <- obj[['longitude']]
         b[[d]]$EVENT_HEADER$END_LATITUDE <- obj[['latitude']]
         b[[d]]$EVENT_HEADER$END_LONGITUDE <- obj[['longitude']]
-        b[[d]]$EVENT_HEADER$MIN_DEPTH <- obj[['distance']][d] + obj[['depthMean']]
-        b[[d]]$EVENT_HEADER$MAX_DEPTH <- obj[['distance']][d] + obj[['depthMean']]    
+        b[[d]]$EVENT_HEADER$MIN_DEPTH <- round(obj[['distance']][d] , digits = 0)
+        b[[d]]$EVENT_HEADER$MAX_DEPTH <- round(obj[['distance']][d] , digits = 0)    
         b[[d]]$EVENT_HEADER$SAMPLING_INTERVAL <- obj[['sampling_interval']]
         b[[d]]$EVENT_HEADER$SOUNDING <- obj[['sounding']]
         b[[d]]$EVENT_HEADER$DEPTH_OFF_BOTTOM  <- as.numeric(obj[['sounding']]) - obj[['depthMean']]
-        b[[d]]$EVENT_HEADER$EVENT_COMMENTS <- obj[['event_comments']]
+        b[[d]]$EVENT_HEADER$EVENT_COMMENTS <- paste(as.charcter(Sys.Date() , obj[['event_comments']]))
         
         # INSTRUMENT_HEADER
         
