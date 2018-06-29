@@ -90,7 +90,7 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
     b$DATA <- matrix(dim = dim(data))
     b$DATA <-  as.matrix(data)
   } else {
-    b$DATA <- cbind(b$DATA, data)
+    b$DATA <- cbind.data.frame(b$DATA, data)
   }
   i <- length(b$DATA[1,])
   
