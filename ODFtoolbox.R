@@ -274,12 +274,33 @@ oce2odf <- function(obj, write = TRUE){
     
     
     #write odf sturctures to odf files
-    #doesn't work --- line formatting issue, not skipping to new line
+    
+    #avoid exporting bins aboove surface
+    export <- (round(obj[['depthMean']] - obj[['distance']], digits = 0))
+    export[export<=0] <- NA
+    
+    #avoid exporting bins with less than 10% valid data
+    for(d in 1:length(obj[['distance']])){
+      bd <- length(b[[d]]$DATA)
+      bv <- length(na.omit(b[[d]]$DATA))
+      
+      if( bv/bd < 0.9){
+        export[[d]] <- NA
+      }
+    }
+    
+    
     if (write == TRUE){
       
       for(d in 1:length(obj[['distance']])){
+        if (!is.na(export[[d]])){
         write_odf( b[[d]],   output_file =paste0(b[[d]]$ODF_HEADER$FILE_SPECIFICATION, '.ODF'))
         print(paste0("Bin", d,"of", length(obj[['distance']]),  "completed", sep = " "))
+        
+        }
+        else{
+          print(paste("Bin", d, "not exported to ODF!"))
+        }
       }
       
     } else{

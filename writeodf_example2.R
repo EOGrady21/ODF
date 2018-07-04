@@ -17,11 +17,11 @@
 library(oce)
 library(ncdf4)
 
-source('adcpToolbox.R')
+source('C:/Users/ChisholmE/Documents/ADCP/R/adcpToolbox.R')
 source('ODFtoolbox.R')
 
 #       read in raw data and metadata
-adp <- read.adp.easy('M1996000.000', 'metadataTemplateM1996.csv')
+adp <- read.adp.easy('R:/Shared/ChisholmE/sample ADP process/M1996000.000', 'R:/Shared/ChisholmE/sample ADP process/metadataTemplateM1996.csv')
 
 #       adjust depth values based on pressure and latitude
 adp[['depth']] <- swDepth(adp[['pressure']], (adp[['latitude']]))
