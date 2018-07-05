@@ -121,7 +121,8 @@ oce2odf <- function(obj, write = TRUE){
     w <- obj[['v']][,,3]
     errv <- obj[['v']][,,4]
     pgd <- obj[['g', 'numeric']][,,4]
-    agc <- apply(X = obj[['a', 'numeric']], MARGIN = 1:2, FUN = mean, na.rm = TRUE)   
+          #FIXME: This line is slowing down code significantly
+    agc <-  rowMeans(obj[['a', 'numeric']], dims = 2, na.rm = TRUE)   
     #handle time separately
     sytm <- obj[['time']]
     
@@ -217,7 +218,7 @@ oce2odf <- function(obj, write = TRUE){
     for( d in 1:length(obj[['distance']])){
       
       #ODF HEADER
-      b[[d]]$ODF_HEADER$FILE_SPECIFICATION <- paste('MADCPS', '_', obj[['cruise_number']], '_', obj[['mooring_number']], '_', obj[['serialNumber']] , '-', (round(obj[['depthMean']] - obj[['distance']][[d]], digits = 0)), sep = '')
+      b[[d]]$ODF_HEADER$FILE_SPECIFICATION <- paste('MADCPS', '_', obj[['cruise_number']], '_', obj[['mooring_number']], '_', obj[['serialNumber']] , '-', (round(obj[['depthMean']] - obj[['distance']][[d]], digits = 0)),'_', obj[['sampling_interval']], sep = '')
       
       #CRUISE HEADER
       b[[d]]$CRUISE_HEADER$COUNTRY_INSTITUTE_CODE <- obj[['country_code']]
@@ -270,7 +271,7 @@ oce2odf <- function(obj, write = TRUE){
     }
     
     
-    save(b, file = paste0('MADCPS_', obj[['cruise_number']],'_',  obj[['mooring_number']], '_', obj[['sampling_interval']], '.Rd', sep = ''))
+    # save(b, file = paste0('MADCPS_', obj[['cruise_number']],'_',  obj[['mooring_number']], '_', obj[['sampling_interval']], '.Rd', sep = ''))
     
     
     #write odf sturctures to odf files
