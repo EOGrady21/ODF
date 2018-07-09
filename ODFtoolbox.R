@@ -306,13 +306,28 @@ oce2odf <- function(obj, write = TRUE){
       
     }
   }
-  
-  if(inherits(obj, what = 'ctd') ){
-    ;
-    ;
+  # #not yet functioning
+  # #take in oce ODF object
+  # if(inherits(obj, what = 'odf') ){
+  #   #not for ADCP data
+  #   if (obj[['type']] != 'ADCP'){
+  #   b <- gen_odfstruct()
+  #   
+  #   if(is.null(obj[['header']])){
+  #     warning('Please read in full ODF header for complete metadata!')
+  #   }
+  #   
+  #   #populate b header from obj[['header']]
+  #   
+  #   #fix time value format
+  #   
+  #   #turn data parameters into data frame
+  #   #populate data with obj@data
+  #
+  #   }
   }
   
-}
+
 
 
 
