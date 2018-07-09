@@ -118,10 +118,14 @@ read_odf <- function(filename) {
 	for( idxLine in 1:(data_lines_index+1) ) {
 		#remove the last character of each line in the header. in all but the
 		#last line it's a comma
-		line <- gsub(",$", "", F[idxLine])
+		line <- gsub( ",$", "", F[idxLine])
 		
 		#remove leading and trailing whitespace
 		line <- gsub("^\\s+|\\s+$", "", line)
+		
+		
+		line <- gsub(x = line, ",$", "") #added by E. Chisholm, errors due to incorrect removal of comma at end of lines
+		
 		
 		#test to see if the current line is a header object
 		#if it exists in the list of ODF_Header names then
@@ -163,6 +167,7 @@ read_odf <- function(filename) {
 						val[2]
 					})
 				curParameter <- addToPram(curParameter, val[1], convertedVal)
+				
 			} else if( headPram[2] == INTEGER ) {
 				curParameter <- addToPram(curParameter, val[1], as.integer(val[2]))
 #				print(paste(val[1], typeof(curParameter[[val[1]]])))
