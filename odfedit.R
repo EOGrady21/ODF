@@ -16,7 +16,7 @@ editParam <- function(odffile, param, value){
  o <-  read_odf(odffile)
  headindex <- grep(param, o) 
  header <- names(o[headindex])
- eval(parse(text = paste0('o$', header, '$', param, '<- ', value)))
+ eval(parse(text = paste0('o$', header, '$', param, '<-  value')))
  write_odf(odf_object = o, output_file = odffile)
 
 }
@@ -66,3 +66,19 @@ batchedit <- function(odffiles, param, value){
   }
 }
 
+
+#' odfSetMetadata
+#'
+#' @param odffile ODF file connection
+#' @param param parameter of metadata to be changed
+#' @param value new value of metadata parameter
+#'
+#' @return an oce odf object
+#' @export
+#'
+#' @examples
+odfSetMetadata <- function(odffile, param, value){
+  odf <- read.odf(odffile)
+  odf <- oceSetMetadata(odf, param, value)
+  return(odf)
+}

@@ -1232,7 +1232,7 @@ editParam <- function(odffile, param, value){
   o <-  read_odf(odffile)
   headindex <- grep(param, o) 
   header <- names(o[headindex])
-  eval(parse(text = paste0('o$', header, '$', param, '<- ', value)))
+  eval(parse(text = paste0('o$', header, '$', param, '<-  value')))
   write_odf(odf_object = o, output_file = odffile)
   
 }
