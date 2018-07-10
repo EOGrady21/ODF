@@ -1551,3 +1551,36 @@ convert_number <- function(sVal) {
   }
   val
 }
+
+
+#' Add or modify history header of an ODF
+#'
+#' @param odfstruct an ODF list structure, created with gen_odfstruct or read
+#'   with read_odf
+#' @param section The history section you wish to add or modify (each
+#'   creation_date line starts a new section)
+#' @param comment the comment you wish to insert. note: if modifying an existing
+#'   line this comment will NOT append existing comments but overwrite them
+#'   
+#' @return an ODF list object with modified history header
+#' @export
+#'
+#' @examples
+add_history <- function(odfstruct, section, comment){
+  b <- odfstruct
+  
+  ts <- grep(names(b$HISTORY_HEADER), pattern = 'CREATION_DATE')
+  
+  if (section >ts){
+    length(b$HISTORY_HEADER) <- length(b$HISTORY_HEADER) + 2
+    b$HISTORY_HEADER[length(b$HISTORY_HEADER) - 1] <- list( CREATION_DATE = toupper(strftime(min(as.character(Sys.time()), na.rm = TRUE),format='%d-%b-%Y %T.00',tz="UTC")))
+    names(b$HISTORY_HEADER[length(b$HISTORY_HEADER) - 1]) <- 'CREATION_DATE'
+    b$HISTORY_HEADER[length(b$HISTORY_HEADER)] <- comment
+  }else{
+      line <- b$HISTORY_HEADER[[ts[[section]]]]
+      b$HISTORY_HEADER[[line+1]] <- comment
+    }
+  
+  
+  
+}
