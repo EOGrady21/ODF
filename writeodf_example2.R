@@ -1,15 +1,6 @@
 ###producing ODFs in R EXAMPLE####
 
 
-# source('R:/Shared/ChisholmE/sample ADP process/adcpToolbox.R')
-# source('R:/Shared/ChisholmE/sample ADP process/exampleProcess.R')
-# 
-# source('R:/Shared/ChisholmE/ODF_R/add_parameter.R')
-# source('R:/Shared/ChisholmE/ODF_R/define_ODF_header.R')
-# source('R:/Shared/ChisholmE/ODF_R/gen_odfstruct.R')
-# source('R:/Shared/ChisholmE/ODF_R/write_odf.R')
-# source('R:/Shared/ChisholmE/ODF_R/oce2odf.R')
-
 ###example processing procedure
 ###input: RAW ADCP file (.000), plus any extra metadata from log sheets (.csv)
 ###output: processed ADCP data in ODF file
@@ -17,7 +8,7 @@
 library(oce)
 library(ncdf4)
 
-source('C:/Users/ChisholmE/Documents/ADCP/R/adcpToolbox.R')
+source('adcpToolbox.R')
 source('ODFtoolbox.R')
 
 #       read in raw data and metadata
