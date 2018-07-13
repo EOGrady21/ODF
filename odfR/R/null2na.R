@@ -1,63 +1,67 @@
-null2na <- function(A) {
-#'   -----------------------------------------------------------------------    
-#'   null2na: Replace null values (-99) with NA in the data of an ODF
-#'   structure.
-#'   
+
+#'   null2na
+#'
+#'     Replace null values (-99) with NA in the data of an ODF
+#'   structure. Substitutes null data with empty strings in an ODF structure.
+#'
 #'   ODSToolbox Version: 2.0
-#'   
+#'
 #'   Creation Date: 09-SEP-2015
 #'   Last Updated: 12-NOV-2015
-#' 
+#'
 #'   @author: Jeff Jackson
-#' 
-#'   @version: 1.0 
-#' 
+#'
+#'   @version: 1.0
+#'
 #'   @copyright: Fisheries and Oceans Canada
-#' 
+#'
 #'   Source:
 #'       Ocean Data and Information Services,
 #'       Bedford Institute of Oceanography, DFO, Canada.
 #'       DataServicesDonnees@dfo-mpo.gc.ca
-#' 
-#'   @summary: Substitutes null data with empty strings in an ODF structure.
-#' 
+#'
+#'   @example
+#'
 #'   Usage:
 #'       A = null2na(A)
-#' 
+#'
 #'   Input:
 #'       A : an ODF structured array
-#' 
+#'
 #'   Output:
 #'       A : the updated ODF structured array with null data replaced with NA
-#' 
+#'
 #'   Example:
 #'       A = null2na(A)
-#' 
-#'   Notes:
-#' 
-#'   See also 
-#'     
-#'   Updates:
-#' 
+#'
+#'
+#'
+#'
+#'
+#'   @Updates:
+#'
 #'     Jeff Jackson (22-SEP-2015)
 #'     - Fixed an error.
-#' 
+#'
 #'     Jeff Jackson (12-NOV-2015)
 #'     - Fixed a logic error.
-#' 
+#'
+#'   @bugs
 #'   Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
-#'   ------------------------------------------------------------------------
+
+
+null2na <- function(A) {
 
   # Get the CRUISE_HEADERs.
   ch <- A@metadata$odfHeader$CRUISE_HEADER
-  
+
   # Get the PARAMETER_HEADERs.
   plist <- A@metadata$odfHeader$PARAMETER_HEADER
-  
+
   # Get the DATA records.
   nrows <- length(A@data[[1]])
   np <- length(A@data)
-                  
+
   # Get a list of the codes, wmo_codes and data types from the parameter headers.
   codes <- NULL
   wmo_codes <- NULL
@@ -87,7 +91,7 @@ null2na <- function(A) {
     }
     types <- c(types, type)
   }
-    
+
   # Loop through all of the data values in the data set. Skip SYTM column(s).
   for (pp in 1:np) {
     # Loop through all of the columns in the current row.

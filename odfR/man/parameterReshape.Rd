@@ -19,6 +19,8 @@ parameterReshape(paramList)
 \arguments{
 \item{paramList}{The parameter header to be reshaped}
 
+\item{paramList}{A list of data paramters to be reshaped}
+
 \item{paramList}{The parameter header to be reshaped}
 
 \item{paramList}{The parameter header to be reshaped}
@@ -28,17 +30,20 @@ Description:
 	Used to convert lists of lists into matrices inorder to present
 	the data in a more compact easier to read, and access, way.
 
+Allows you to reshape a set of data parameters for insertion into an ODF file
+
+Description:
+	Used to convert lists of lists into matrices inorder to present
+	the data in a more compact easier to read, and access, way.
+
+Description:
+	Used to convert lists of lists into matrices inorder to present
+	the data in a more compact easier to read, and access, way.
+}
+\note{
 Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
 You may distribute under the terms of either the GNU General Public
 License or the Apache v2 License, as specified in the README file.
-
-Description:
-	Used to convert lists of lists into matrices inorder to present
-	the data in a more compact easier to read, and access, way.
-
-Description:
-	Used to convert lists of lists into matrices inorder to present
-	the data in a more compact easier to read, and access, way.
 }
 \author{
 Patrick Upson

@@ -2,6 +2,9 @@
 
 #' Edit an ODF attribute
 #'
+#'Edit a metadata parameter in an existing ODF file, useful for correcting or
+#'updating archived data files
+#'
 #' @param odffile an ODF file connection
 #' @param param The parameter you wish to edit
 #' @param value The value you wish to insert into the odf file
@@ -10,11 +13,11 @@
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' editParam('MADCPS*...*.ODF, 'MIN_DEPTH', '2.5')
 editParam <- function(odffile, param, value){
  o <-  read_odf(odffile)
- headindex <- grep(param, o) 
+ headindex <- grep(param, o)
  header <- names(o[headindex])
  eval(parse(text = paste0('o$', header, '$', param, '<-  value')))
  write_odf(odf_object = o, output_file = odffile)
@@ -22,7 +25,7 @@ editParam <- function(odffile, param, value){
 }
 
 #' edit an ODF data frame
-#' 
+#'
 #' Function returns ODF data frame which can be edited/ processed as necessary then written out again
 #'
 #' @param odffile an odf file connection
@@ -52,14 +55,14 @@ editData <- function(odffile){
 #' @export
 #'
 #' @examples see editParam example
-#' 
+#'
 #' batchedit(odffiles = list.files(path = '.', pattern = '*.ODF'), param = 'ORGANIZATION', value = 'DFO SABS')
-#' 
-#' 
+#'
+#'
 batchedit <- function(odffiles, param, value){
   for ( i in 1:length(odffiles)){
     o <-  read_odf(odffiles[i])
-    headindex <- grep(param, o) 
+    headindex <- grep(param, o)
     header <- names(o[headindex])
     eval(parse(text = paste0('o$', header, '$', param, '<- ', value)))
     write_odf(odf_object = o, output_file = odffiles[i])

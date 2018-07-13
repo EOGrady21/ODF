@@ -1,15 +1,16 @@
 #' Ocean Data Format (ODF)
-
+#'
 #' Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
 #' You may distribute under the terms of either the GNU General Public
 #' License or the Apache v2 License, as specified in the README file.
-
-#' Description:
+#' @Description:
 #'   Package intended to read, write and work with files in the Ocean Data Format (ODF)
-#' 
+#'
 #' @details
 #' ODSToolbox Version: 2.0
 #'
+#'
+#' @update
 #' Last Updated: June 17, 2014.
 #'
 #' Source:
@@ -17,11 +18,11 @@
 #'   Bedford Institute of Oceanography, DFO, Canada.
 #'   DataServicesDonnees@@dfo-mpo.gc.ca
 #'
-#' Notes:
+#' @details
 #'   This program was totally re-designed and re-written for
 #'   ODSToolbox Version 2.0. It is not based on Version 1.0.
 #'   In addition the package, classes, methods and functions,
-#'   originally written for Matlab were, re-written again to 
+#'   originally written for Matlab were, re-written again to
 #'   be used in R.
 #'
 #'   While this new version of read_odf corrects many errors in

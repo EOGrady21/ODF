@@ -1,6 +1,8 @@
 ####add parameter####
 
-#' add a parameter to an existing ODF structure array (b)
+#'Add ODF parameter
+#'
+#'   add a parameter to an existing ODF structure array (b)
 #'reads in variable, add a parameter header, cal header and column to the data portion of the ODF
 #'
 #'parameter header has: type, name, units, code, null_value, print_field_width,
@@ -17,27 +19,27 @@
 #' @param obj oce/ odf (?) object to  pull data and metadata from
 #' @param VARNAME name of parameter (in object data is being pulled from)
 #' @param cal TRUE/ FALSE whether or not to produce a polynomial cal header for same parameter code
-#' 
-#' 
+#'
+#'
 #' @export
-#' 
-#' @examples 
-#' 
+#'
+#' @examples
+#'
 #' ```
 #' b <- gen_odfstruct()
 #' obj <- read.oce('MCTD****.ODF)
-#' 
+#'
 #' b <- add_parameter(b, obj, VARNAME = 'salinity', cal = TRUE)
 #' ````
 
 
 add_parameter <- function(b, data, VARNAME, cal = FALSE){
-  
+
   gf3 <- as.gf3(VARNAME)
-  
-  
+
+
   length(b$PARAMETER_HEADER) <- length(b$PARAMETER_HEADER) +1
-  
+
   params <- list()
   for (i in length(b$PARAMETR_HEADER)){
     params[[i]] <- b$PARAMETER_HEADER$CODE
@@ -47,7 +49,7 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
   } else{
     gf3$code <- paste(gf3$code, '01', sep = '_')
   }
-  
+
   i <- length(b$PARAMETER_HEADER)
   b$PARAMETER_HEADER[[i]] <-
     list(
@@ -66,26 +68,26 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
       NUMBER_VALID = '',
       NUMBER_NULL = ''
     )
-  
-  
-  
-  
+
+
+
+
   if (cal == TRUE){
     length(b$POLYNOMIAL_CAL_HEADER) <- length(b$POLYNOMIAL_CAL_HEADER) +1
     i <- length(b$POLYNOMIAL_CAL_HEADER)
-    
-    b$POLYNOMIAL_CAL_HEADER[[i]] <- 
+
+    b$POLYNOMIAL_CAL_HEADER[[i]] <-
       list(
-        PARAMETER_NAME = VARNAME, 
-        CALIBRATION_DATE = '', 
-        APPLICATION_DATE = '', 
-        NUMBER_COEFFICIENTS = '', 
+        PARAMETER_NAME = VARNAME,
+        CALIBRATION_DATE = '',
+        APPLICATION_DATE = '',
+        NUMBER_COEFFICIENTS = '',
         COEFFICIENTS = ''
       )
-    
+
   }
 
-  
+
   if (is.null(dim(b$DATA))){
     b$DATA <- matrix(dim = dim(data))
     b$DATA <-  as.matrix(data)
@@ -93,11 +95,11 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
     b$DATA <- cbind.data.frame(b$DATA, data)
   }
   i <- length(b$DATA[1,])
-  
+
   colnames(b$DATA[[i]]) <- gf3$code
-  
+
   b$DATA <- as.data.frame(b$DATA)
-  
+
   return(b)
 }
 
@@ -105,9 +107,9 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
 
 as.gf3 <- function(VARNAME){
   load("~/roger/gf3defs.RData")
-  
+
   if (!( VARNAME %in% gf3defs$CODE)){
-  
+
   if (VARNAME == 'u'){
     codevar <- 'EWCT'
   }
@@ -157,14 +159,14 @@ as.gf3 <- function(VARNAME){
   if (VARNAME %in% gf3defs$GF3_CODE){
     codevar <- VARNAME
   }
-  
+
   #add more oce to gf3 code translations
     #eg for ctd, cm, tr, etc
   loc <- gf3defs$GF3_CODE == codevar
   VARNAME <- list(
-    code = gf3defs$GF3_CODE[loc], 
+    code = gf3defs$GF3_CODE[loc],
     def = gf3defs$GF3_DEFINITION[loc],
-    units = gf3defs$UNITS[loc], 
+    units = gf3defs$UNITS[loc],
     width = gf3defs$WIDTH[loc],
     prec = gf3defs$PRECISION[loc]
   )

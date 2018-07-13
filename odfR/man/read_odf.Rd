@@ -27,12 +27,10 @@ License or the Apache v2 License, as specified in the README file.
 Description:
   Read in an ODF file.
 
-READ_ODF: Read in an ODF file.
+@copyright
 Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
 You may distribute under the terms of either the GNU General Public
 License or the Apache v2 License, as specified in the README file.
-Description:
-  Read in an ODF file.
 }
 \details{
 ODSToolbox Version: 2.0
@@ -91,6 +89,6 @@ Replace formats for SYTM_01: from strings to ISO time format (asumes UTC), line 
 Yongcun Hu, Patrick Upson
 
 Modified by Gordana Lazin, June 8, 2015
-Import data using read.table function (line 190), much faster 
+Import data using read.table function (line 190), much faster
 Replace formats for SYTM_01: from strings to ISO time format (asumes UTC), line 231
 }

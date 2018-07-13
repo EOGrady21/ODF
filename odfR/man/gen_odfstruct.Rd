@@ -18,14 +18,11 @@ gen_odfstruct()
 \description{
 ODS Toolbox Version: 2.0
 
-ODS Toolbox Version: 2.0
+creates an empty list structure to populate and export as ODF
 
 ODS Toolbox Version: 2.0
 }
 \details{
-Created: 19-OCT-2016
-Updated: 30-NOV-2016
-
 Created: 19-OCT-2016
 Updated: 30-NOV-2016
 

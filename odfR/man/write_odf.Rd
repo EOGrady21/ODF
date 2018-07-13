@@ -38,11 +38,6 @@ License or the Apache v2 License, as specified in the README file.
 Description:
 takes an ODF object and an output location and writes an ODF compliant output file
 
-write_odf
-Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
-You may distribute under the terms of either the GNU General Public
-License or the Apache v2 License, as specified in the README file.
-Description:
 takes an ODF object and an output location and writes an ODF compliant output file
 
 write_odf
@@ -80,6 +75,11 @@ CAVEAT: If the value of TYPE in the parameter header for an SYTM time field is '
 not 'SYTM', the output file will have an integer (POSIXct) format for time and not the expected "DD-MMM-YYYY HH:MM:SS.FF" format 
 so it is advised to change it before running "write_odf"
 
+Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
+You may distribute under the terms of either the GNU General Public
+License or the Apache v2 License, as specified in the README file.
+
+
 date: July 4, 2014
 
 Modified Jun 21, 2018.
@@ -92,7 +92,7 @@ Changed the accessing of PARAMETER_HEADER fields from
  to:
  odf_object$PARAMETER_HEADER[i][[1]][[field]]
 
-Changed 
+Changed
 prams <- odf_object$PARAMETER_HEADER$CODE
 to:
 or (a in 1:length(odf_object$PARAMETER_HEADER)) prams[a] <- B$PARAMETER_HEADER[a][[1]]$CODE
@@ -104,7 +104,7 @@ to properly reflect the data type (if not already set to type "SYTM"). Otherwise
 Other changes indicated with comment lines "R.Pettipas"
 
 CAVEAT: If the value of TYPE in the parameter header for an SYTM time field is 'SING' and
-not 'SYTM', the output file will have an integer (POSIXct) format for time and not the expected "DD-MMM-YYYY HH:MM:SS.FF" format 
+not 'SYTM', the output file will have an integer (POSIXct) format for time and not the expected "DD-MMM-YYYY HH:MM:SS.FF" format
 so it is advised to change it before running "write_odf"
 
 date: July 4, 2014

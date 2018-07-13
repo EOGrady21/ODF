@@ -2,19 +2,19 @@
 % Please edit documentation in R/bfspec.R
 \name{bfspec}
 \alias{bfspec}
-\title{------------------------------------------------------------------------
-  BFSPEC: Creates a file specification string based on ODF header information.}
+\title{@title BFSPEC:}
 \usage{
 bfspec(C)
 }
 \description{
-ODSToolbox Version: 2.0
+Creates a file specification string based on ODF header information.
+  ODSToolbox Version: 2.0
 }
 \details{
 Creation Date: 02-SEP-2015
   Last Updated: 02-SEP-2015
-  
-  @author: Jeff Jackson
+
+@author: Jeff Jackson
 
 @version: 1.0
 
@@ -23,28 +23,7 @@ Creation Date: 02-SEP-2015
 Source:
       Ocean Data and Information Services,
       Bedford Institute of Oceanography, DFO, Canada.
-      DataServicesDonnees@dfo-mpo.gc.ca
+      DataServicesDonnees"at"dfo-mpo.gc.ca
 
 @summary: Creates a file specification string based on ODF header information.
-
-Usage: bstr = bfspec(A)
-
-Input:
-      A: An ODF structured array.
-
-Output:
-      bstr: The file specification string.
-
-Example:
-      bfstr = bfspec(ODF)
-
-Notes:
- 
-  Updates:
-
-Jeff Jackson (02-SEP-2015)
-    - 
-  
-  Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
-  ------------------------------------------------------------------------
 }

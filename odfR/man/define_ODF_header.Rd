@@ -16,9 +16,9 @@ This tool usually is called by other tools such as ODF read,
   write and edit etc. It is one of the core tools and users 
   should not make any changes to it.
 
-This tool usually is called by other tools such as ODF read,
-  write and edit etc. It is one of the core tools and users 
-  should not make any changes to it.
+Defines and returns the header section of an ODF file.
+Output:
+  ODF_HEADER is a cell array containing the definition.
 }
 \details{
 A new block can be added easily to this definition to extend an
@@ -38,16 +38,16 @@ Source:
   Bedford Institute of Oceanography, DFO, Canada.
   DataServicesDonnees@dfo-mpo.gc.ca
 
+This tool usually is called by other tools such as ODF read,
+  write and edit etc. It is one of the core tools and users
+  should not make any changes to it.
+
 A new block can be added easily to this definition to extend an
   ODF header structure. The new block should be considered as
   'optional', otherwise all existing ODF files will have to be
   modified as well.
 
 Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
-
-ODSToolbox Version: 2.0
-
-Last Updated: September 3, 2015
 
 
 Source:
@@ -70,9 +70,4 @@ You may distribute under the terms of either the GNU General Public
 License or the Apache v2 License, as specified in the README file.
 
 Yongcun Hu, Patrick Upson
-
-
-Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
-You may distribute under the terms of either the GNU General Public
-License or the Apache v2 License, as specified in the README file.
 }

@@ -21,7 +21,7 @@ binExport(obj, bins)
 \description{
 Select bin export
 
-Select bin export
+Select particular ADCP bins to be exported to ODF files
 }
 \examples{
 ```

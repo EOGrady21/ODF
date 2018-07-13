@@ -1,16 +1,15 @@
-#' READ_ODF: Read in an ODF file.
-
+#' READ_ODF:
+#'  Read in an ODF file.
+#'
+#'  @copyright
 #' Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
 #' You may distribute under the terms of either the GNU General Public
 #' License or the Apache v2 License, as specified in the README file.
-
-#' Description:
-#'   Read in an ODF file.
-#' 
+#'
 #' @param filename location and name of the ODF file to be processed
 #'
 #' @export
-#' 
+#'
 #' @details
 #' ODSToolbox Version: 2.0
 #'
@@ -36,9 +35,9 @@
 #' See also \code{\link{write_odf}}.
 #'
 #' @author Yongcun Hu, Patrick Upson
-#' 
+#'
 #' Modified by Gordana Lazin, June 8, 2015
-#' Import data using read.table function (line 190), much faster 
+#' Import data using read.table function (line 190), much faster
 #' Replace formats for SYTM_01: from strings to ISO time format (asumes UTC), line 231
 #'
 read_odf <- function(filename) {
@@ -48,7 +47,7 @@ read_odf <- function(filename) {
 	#         strings are changed in that definition, they must be changed
 	#         here accordingly.
 	DATA_LINE = '-- DATA --'          # starting line of data section
-	
+
 	SYTM = 'SYTM'
 	GENERAL_CAL_HEADER = 'GENERAL_CAL_HEADER'
 	POLYNOMIAL_CAL_HEADER = 'POLYNOMIAL_CAL_HEADER'
@@ -60,7 +59,7 @@ read_odf <- function(filename) {
 	if( !file.exists(filename) ) {
 		stop("File does not exist")
 	}
-	
+
 	# read the input ODF File
 	F <- readFile(filename)
 
@@ -68,7 +67,7 @@ read_odf <- function(filename) {
 	if(length(filename) <= 0) {
 		stop("File contains no data")
 	}
-	
+
 	# check if input ODF file has one and only one such line '-- DATA --'
 	dataLineArray <- grepl(DATA_LINE, F);
 	data_lines_index <- which(dataLineArray==TRUE)
@@ -82,7 +81,7 @@ read_odf <- function(filename) {
 
 	if(length(data_lines_index) <= 0 ) {
 		stop(
-			' \n', 
+			' \n',
 			paste(' -- The input ODF file "', filename, '" does NOT have a\n'),
 			'    separated beginning line for data section such as:\n',
 			paste('        ', DATA_LINE, '\n'),
@@ -99,34 +98,34 @@ read_odf <- function(filename) {
 			'    header blocks and data section.\n',
 			' \n'
 		)
-		
+
 	}
 
 	# get the ODF header information
 	odf_header <- define_ODF_header()
-	
+
 	curParameterName = NULL
 	curParameter  = NULL
-	
+
 	headObject = NULL
-	
+
 	#Create the ODF structure to be returned
 	S <- list()
-	
-	#scan through the header lines, we know where the index line is because 
+
+	#scan through the header lines, we know where the index line is because
 	#it was found in the above section
 	for( idxLine in 1:(data_lines_index+1) ) {
 		#remove the last character of each line in the header. in all but the
 		#last line it's a comma
 		line <- gsub( ",$", "", F[idxLine])
-		
+
 		#remove leading and trailing whitespace
 		line <- gsub("^\\s+|\\s+$", "", line)
-		
-		
+
+
 		line <- gsub(x = line, ",$", "") #added by E. Chisholm, errors due to incorrect removal of comma at end of lines
-		
-		
+
+
 		#test to see if the current line is a header object
 		#if it exists in the list of ODF_Header names then
 		#create a list for the variables to follow and add
@@ -144,16 +143,16 @@ read_odf <- function(filename) {
 			curParameterName <- line
 			curParameter <- NULL
 		} else {
-			
+
 			val <- extract_val(line)
 
 			#find the parameter from the header definition
 			pramIndex <- grep(paste("^",val[1],"$",sep=""), headObject[[curParameterName]][,1])
 			headPram <- headObject[[curParameterName]][pramIndex,]
-			
+
 #			print(paste("pram:",val[1]))
 #			print(headPram)
-		
+
 			if( is.null(curParameter)) {
 				curParameter <- list()
 			}
@@ -167,7 +166,7 @@ read_odf <- function(filename) {
 						val[2]
 					})
 				curParameter <- addToPram(curParameter, val[1], convertedVal)
-				
+
 			} else if( headPram[2] == INTEGER ) {
 				curParameter <- addToPram(curParameter, val[1], as.integer(val[2]))
 #				print(paste(val[1], typeof(curParameter[[val[1]]])))
@@ -177,7 +176,7 @@ read_odf <- function(filename) {
 					curParameterName == COMPASS_CAL_HEADER ) {
 					tmpVals <- gsub("\\s+|\\t+", ",", val[2])
 					tmpVals <- strsplit(tmpVals, ",")[[1]]
-					
+
 					for( i in 1:length(tmpVals) ) {
 						curParameter <- addToPram(curParameter, val[1], as.numeric(tmpVals[i]))
 					}
@@ -191,10 +190,10 @@ read_odf <- function(filename) {
 		}
 	}
 
-	
+
 # read the data, skip the header
   S$DATA = read.table( filename, skip=data_lines_index, as.is=T,stringsAsFactors=F)
-	
+
 	# retrieve the parameter names and cast the columns into their proper types
 	# this all assumes a perfect case that the PARAMETER_HEADER has been set correctly
 	# and all values in the columns are of the proper type
@@ -203,7 +202,7 @@ read_odf <- function(filename) {
 		code = length(S$PARAMETER_HEADER[[i]][['CODE']]) > 0
 		wmo_code = length(S$PARAMETER_HEADER[[i]][['WMO_CODE']]) > 0
 		name = length(S$PARAMETER_HEADER[[i]][['NAME']]) > 0
-		
+
 		if( code ) {
 			pram_names <- c(pram_names, S$PARAMETER_HEADER[[i]][['CODE']])
 		} else if(wmo_code) {
@@ -213,7 +212,7 @@ read_odf <- function(filename) {
 					"The file contains no 'CODE' fields in the parameter list.\n",
 					"\n")
 			pram_names <- c(pram_names, S$PARAMETER_HEADER[[i]][['NAME']])
-			
+
 		}
 #		if(S$PARAMETER_HEADER[[i]]$TYPE == 'DOUB' || S$PARAMETER_HEADER[[i]]$TYPE == 'SING') {
 #			print("Double column")
@@ -223,12 +222,12 @@ read_odf <- function(filename) {
 #			S$DATA[,i] <- as.integer(S$DATA[,i])
 #		}
 	}
-	
+
 	#set the names for the columns in the matrix
 	colnames(S$DATA) <- pram_names
-	
-	
-	#add the input file to the structure for user convenience 
+
+
+	#add the input file to the structure for user convenience
 	S$INPUT_FILE = filename
 
   #Replace formats for SYTM_01: from strings to ISO time format (asumes UTC)
@@ -243,11 +242,11 @@ if(length(grep("SYTM_01",pram_names))>0) {
 
 #'
 #' addToPram
-#' 
+#'
 #' Description:
 #' 	Used to create and add to a list, parameters using the same name are added
 #' to a list of other parameters using the same name. The list is then returned.
-#' 
+#'
 #' @param pram - Null or the existing list of parameters
 #' @param name - the name of the sub-parameter list to add the value to
 #' @param val - the value to add the the parameter ist.
@@ -285,7 +284,7 @@ addToPram <- function(pram, name, val) {
 			tmp <- pram[[name]]
 			tmpNames <- names(pram[[name]])
 			names(tmp) <- tmpNames
-			
+
 			pram[[name]] <- list()
 			pram[[name]][[1]] <- tmp
 			pram[[name]][[2]] <- val
@@ -297,21 +296,21 @@ addToPram <- function(pram, name, val) {
 			pram[[name]][[length(pram[[name]])+1]] <- val
 		}
 	}
-	
+
 	pram
 }
 #'parameterReshape
-#' 
+#'
 #' Description:
 #' 	Used to convert lists of lists into matrices inorder to present
 #' 	the data in a more compact easier to read, and access, way.
-#' 
+#'
 #' @param paramList The parameter header to be reshaped
 #'
 parameterReshape <- function(paramList) {
 	nameArray = NULL
 	param = NULL
-	
+
 	#if the parameter list has more than one element, but has no names
 	#then it's a list of lists
 	if( length(names(paramList) ) <= 0 ) {
@@ -319,9 +318,9 @@ parameterReshape <- function(paramList) {
 			nameArray <- c(nameArray, names(paramList[[i]]))
 		}
 		nameArray <- unique(nameArray)
-		
+
 		param = data.frame(matrix(1, nrow=length(paramList), ncol=length(nameArray)))
-		
+
 		for( i in 1:length(paramList) ) {
 			for( j in 1:length(nameArray)) {
 				param[i,j] <- paramList[[i]][[nameArray[j]]]
@@ -334,17 +333,17 @@ parameterReshape <- function(paramList) {
 			param[j] <- paramList[[nameArray[j]]]
 		}
 	}
-	
+
 	names(param) <- nameArray
-	
+
 	param
 }
 
 #' readFile
-#' 
+#'
 #' Description:
 #'   read the data from a file and return an array of lines
-#' 
+#'
 #' @param filename input ODF file name
 #'
 #' @details
@@ -359,19 +358,19 @@ readFile <- function(filename) {
 	conn=file(filename,open="r")
 	line=readLines(conn)
 	close(conn)
-	
+
 	line
 }
 #'
 #' extract_val
-#' 
+#'
 #' Description:
 #' 	Used to split a line into a key and value pair. Leading and trailing spaces
 #' are removed and 00000D+00 strings are replaced with 00000E+00 strings.
-#' 
+#'
 #' @param line The line to be split up at an '=' symbol. The left side of the
 #' 		symbol becomes the key, the right side becomes the value
-#' 
+#'
 # ========================================================================
 # Sub-function : EXTRACT_VAL
 #      Purpose : Extract field value from input string expression
@@ -381,39 +380,39 @@ readFile <- function(filename) {
 #              : then VAL is NED2009002
 # ------------------------------------------------------------------------
 extract_val <- function(line) {
-	
+
 	#create a character array used for substrings and indexing
 	charArray <- strsplit(line, "")[[1]]
 	equIndex <- grep("=", charArray)[1]
-	
+
 	#split the filed up into the field name and it's value
 	val <- c(substr(line, 1, equIndex-1), substr(line, equIndex+1, length(charArray)))
-	
+
 	#remove leading and trailing whitespaces from both the field name and field value
 	val <- gsub("^\\s+", "", val)
-	
+
 	#remove leading and trailing single quotes from both the field name and field value
 	val <- gsub("^'|'$", "", val)
 
 	#remove leading and trailing whitespaces from both the field name and field value
 	val <- gsub("\\s+$", "", val)
-	
+
 	val <- convert_number(val)
-	
+
 	val
 }
 
 #'
 #' convert_number
-#' 
+#'
 #' Description:
 #' 	convert 00000D+00 strings to 00000E+00 strings.
-#' 
+#'
 #' @param sVal - a string or array of strings
-#' 
+#'
 convert_number <- function(sVal) {
 	val <- sVal
-	
+
 	for( i in 1:length(val)) {
 		if( grepl("([0-9]+D(\\+|-)[0-9][0-9])", val[i]) ) {
 			#in older files numeric notation is sometimes 0.0000000D+00 for base 10 exponents
