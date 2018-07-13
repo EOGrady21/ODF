@@ -26,3 +26,7 @@ returns empty odf object with header metadata filled out
 
 returns empty odf object with header metadata filled out
 }
+\examples{
+obj[['event_comments']]
+obj[['description']]
+}

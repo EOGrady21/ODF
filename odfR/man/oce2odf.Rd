@@ -32,3 +32,7 @@ Currently fully functioning for ADCP data
 Accepts an oce class object (adp) and converts into a series of ODF files to
 be exported
 }
+\author{
+E. Chisholm
+Version 1.0
+}

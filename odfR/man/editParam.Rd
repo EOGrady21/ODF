@@ -33,3 +33,8 @@ Edit an ODF attribute
 Edit a metadata parameter in an existing ODF file, useful for correcting or
 updating archived data files
 }
+\examples{
+
+editParam('MADCPS_________.ODF', 'MIN_DEPTH', '2.5')
+
+}

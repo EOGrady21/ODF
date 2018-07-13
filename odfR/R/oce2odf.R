@@ -1,23 +1,3 @@
-####oce2odf####
-
-
-#'convert oce objects to ODF
-#'
-#'Functions which allow tranfer between oce objects and ODF files
-#'
-#'@author: Emily Chisholm, emily.chisholm "at" dfo-mpo.gc.ca
-#'@date: June 28 2018
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-NULL
-
 
 
 
@@ -32,7 +12,7 @@ NULL
 #' @export
 #'
 #'
-#' @example
+#' @examples
 #' obj[['event_comments']]
 #' obj[['description']]
 
@@ -95,8 +75,8 @@ oce2odfHeader <- function(obj){
 #'be exported
 #'
 #'
-#'@Author E. Chisholm
-#'@version 1.0
+#' @author E. Chisholm
+#'Version 1.0
 #'
 #' @param obj oce object for data to be copied to odf
 #' @param write whether or not to write out all the odf files produced, default
@@ -313,15 +293,15 @@ oce2odf <- function(obj, write = TRUE){
 #' @param obj an ODF structure object with multiple depth bins (produced from oce2odf)
 #' @param bins the bin numbers you wish to export
 #'
-#' @return
+#'
 #' @export
 #'
 #' @examples
-#' ```
+#'
 #' # oce2odf(adp, write = FALSE)
 #' # bins <- list(12:34)
 #' # binExport(obj = b, bins)
-#' ````
+#'
 binExport <- function(obj, bins){
 
 
@@ -359,12 +339,12 @@ binExport <- function(obj, bins){
 #'
 #' @examples
 #'
-#' ```
+#'
 #' b <- gen_odfstruct()
-#' obj <- read.oce('MCTD****.ODF)
+#' obj <- read.oce('MCTD****.ODF')
 #'
 #' b <- add_parameter(b, obj, VARNAME = 'salinity', cal = TRUE)
-#' ````
+#'
 
 
 add_parameter <- function(b, data, VARNAME, cal = FALSE){
@@ -446,7 +426,7 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
 #' @return list with GF3 code, def, width, prec and units
 #' @export
 #'
-#' @examples
+#'
 as.gf3 <- function(VARNAME){
   load("~/gf3defs.RData")
 

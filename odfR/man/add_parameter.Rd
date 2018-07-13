@@ -73,3 +73,18 @@ number_coefficients, coefficients
 
 data columns should be added in order of parameter headers
 }
+\examples{
+
+b <- gen_odfstruct()
+obj <- read.oce('MCTD****.ODF')
+
+b <- add_parameter(b, obj, VARNAME = 'salinity', cal = TRUE)
+
+
+
+b <- gen_odfstruct()
+obj <- read.oce('MCTD****.ODF')
+
+b <- add_parameter(b, obj, VARNAME = 'salinity', cal = TRUE)
+
+}

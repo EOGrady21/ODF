@@ -5,10 +5,10 @@
 #'
 #' @param file_path the path of the directory to source
 #'
-#' @return
+#'
 #' @export
 #'
-#' @
+#'
 sourceDir <- function(file_path) {
 X <- list.files(path=file_path, pattern='*.R',full.names=FALSE)
 for(j in X) {

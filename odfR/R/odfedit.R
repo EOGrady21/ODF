@@ -10,11 +10,12 @@
 #' @param value The value you wish to insert into the odf file
 #'
 #' @return an updated ODF file
+#'
+#'
+#'
+#'
+#'
 #' @export
-#'
-#' @examples
-#'
-#' editParam('MADCPS*...*.ODF, 'MIN_DEPTH', '2.5')
 editParam <- function(odffile, param, value){
  o <-  read_odf(odffile)
  headindex <- grep(param, o)
@@ -33,7 +34,7 @@ editParam <- function(odffile, param, value){
 #' @return the data frame from the odf file
 #' @export
 #'
-#' @examples
+#'
 editData <- function(odffile){
   o <- read_odf(odffile)
   data <- o$DATA
@@ -79,7 +80,7 @@ batchedit <- function(odffiles, param, value){
 #' @return an oce odf object
 #' @export
 #'
-#' @examples
+#'
 odfSetMetadata <- function(odffile, param, value){
   odf <- read.odf(odffile)
   odf <- oceSetMetadata(odf, param, value)

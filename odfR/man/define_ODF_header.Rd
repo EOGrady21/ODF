@@ -13,7 +13,7 @@ define_ODF_header()
 }
 \description{
 This tool usually is called by other tools such as ODF read,
-  write and edit etc. It is one of the core tools and users 
+  write and edit etc. It is one of the core tools and users
   should not make any changes to it.
 
 Defines and returns the header section of an ODF file.
@@ -49,6 +49,10 @@ A new block can be added easily to this definition to extend an
 
 Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
 
+ODSToolbox Version: 2.0
+
+September 3, 2015
+
 
 Source:
   Ocean Data and Information Services,
@@ -56,8 +60,6 @@ Source:
   DataServicesDonnees@dfo-mpo.gc.ca
 }
 \examples{
-ODF_header <- define_ODF_header()
-
 ODF_header <- define_ODF_header()
 
 }
@@ -70,4 +72,9 @@ You may distribute under the terms of either the GNU General Public
 License or the Apache v2 License, as specified in the README file.
 
 Yongcun Hu, Patrick Upson
+
+
+ Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
+You may distribute under the terms of either the GNU General Public
+License or the Apache v2 License, as specified in the README file.
 }

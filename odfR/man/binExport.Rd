@@ -18,20 +18,23 @@ binExport(obj, bins)
 
 \item{bins}{the bin numbers you wish to export}
 }
+\value{
+a series of selected ODF files from ADCp data
+}
 \description{
 Select bin export
 
 Select particular ADCP bins to be exported to ODF files
 }
 \examples{
-```
+
 # oce2odf(adp, write = FALSE)
 # bins <- list(12:34)
 # binExport(obj = b, bins)
-````
-```
+
+
 # oce2odf(adp, write = FALSE)
 # bins <- list(12:34)
 # binExport(obj = b, bins)
-````
+
 }

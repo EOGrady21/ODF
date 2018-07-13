@@ -25,12 +25,11 @@
 #'
 #' @examples
 #'
-#' ```
 #' b <- gen_odfstruct()
-#' obj <- read.oce('MCTD****.ODF)
+#' obj <- read.oce('MCTD****.ODF')
 #'
 #' b <- add_parameter(b, obj, VARNAME = 'salinity', cal = TRUE)
-#' ````
+#'
 
 
 add_parameter <- function(b, data, VARNAME, cal = FALSE){

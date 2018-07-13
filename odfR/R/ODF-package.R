@@ -3,14 +3,14 @@
 #' Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
 #' You may distribute under the terms of either the GNU General Public
 #' License or the Apache v2 License, as specified in the README file.
-#' @Description:
+#'
 #'   Package intended to read, write and work with files in the Ocean Data Format (ODF)
 #'
 #' @details
 #' ODSToolbox Version: 2.0
 #'
 #'
-#' @update
+#'
 #' Last Updated: June 17, 2014.
 #'
 #' Source:

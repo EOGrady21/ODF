@@ -5,9 +5,7 @@
 \alias{gen_odfstruct}
 \alias{gen_odfstruct}
 \alias{gen_odfstruct}
-\title{'''
-------------------------------------------------------------------------
-GEN_ODFSTRUCT: Build an empty ODF structured array.}
+\title{GEN_ODFSTRUCT: Build an empty ODF structured array.}
 \usage{
 gen_odfstruct()
 
@@ -26,13 +24,84 @@ ODS Toolbox Version: 2.0
 Created: 19-OCT-2016
 Updated: 30-NOV-2016
 
+
+version: 1.0
+
+2016, Fisheries and Oceans Canada. All Rights Reserved.
+
+summary: Build an empty ODF structured array.
+
+Usage:  C = gen_odfstruct()
+
+Input:  none
+
+Output:
+  C: An empty ODF structured array
+
+Example:  C = gen_odfstruct()
+
+Notes:
+
+See also CRUISE_EVENT_TO_ORACLE, DATA_TO_ORACLE, ODF_FROM_ORACLE
+
+Updates:
+
+  Roger Pettipas (21-JUN-2018)
+  Changed the time data format to be similar to the classic ODF time string
+
+  Jeff Jackson (20-OCT-2016)
+  - Finished converting the original Python code to R.
+
+  Jeff Jackson (30-NOV-2016)
+  - Replaced call to lubridate function now() with the Sys.time() call.
+
+Report any bugs to DataServicesDonnees"at"dfo-mpo.gc.ca
+
+ODS Toolbox Version: 2.0
+
 Created: 19-OCT-2016
 Updated: 30-NOV-2016
+
+Created: 19-OCT-2016
+Updated: 30-NOV-2016
+}
+\examples{
+
+Usage:  C = gen_odfstruct()
+
+Input:  none
+
+Output:
+  C: An empty ODF structured array
+
+Example:  C = gen_odfstruct()
+
+Notes:
+
+See also CRUISE_EVENT_TO_ORACLE, DATA_TO_ORACLE, ODF_FROM_ORACLE
+
+
+
+
+  Roger Pettipas (21-JUN-2018)
+  Changed the time data format to be similar to the classic ODF time string
+
+  Jeff Jackson (20-OCT-2016)
+  - Finished converting the original Python code to R.
+
+  Jeff Jackson (30-NOV-2016)
+  - Replaced call to lubridate function now() with the Sys.time() call.
+
+Report any bugs to DataServicesDonnees"at"dfo-mpo.gc.ca
 }
 \author{
 : Jeff Jackson
 
 : Jeff Jackson
+
+
+
+ 2016, Fisheries and Oceans Canada. All Rights Reserved.
 
 : Jeff Jackson
 }

@@ -15,13 +15,12 @@
 #'
 #'   Report any bugs to DataServicesDonnees@@dfo-mpo.gc.ca
 #'
-#' @version ODSToolbox Version: 2.0
+#' ODSToolbox Version: 2.0
 #'
-#' @update September 3, 2015
+#' September 3, 2015
 #'
 #' @export
-#' @examples
-#' ODF_header <- define_ODF_header()
+#'
 #'
 #' @details
 #' Source:
@@ -32,7 +31,7 @@
 #' @author Yongcun Hu, Patrick Upson
 #'
 #'
-#' @copyright Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
+#'  Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
 #' You may distribute under the terms of either the GNU General Public
 #' License or the Apache v2 License, as specified in the README file.
 

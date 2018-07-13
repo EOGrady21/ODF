@@ -11,9 +11,23 @@ You may distribute under the terms of either the GNU General Public
 License or the Apache v2 License, as specified in the README file.
 }
 \details{
+Package intended to read, write and work with files in the Ocean Data Format (ODF)
+
+
 ODSToolbox Version: 2.0
 
-This program was totally re-designed and re-written for
+
+
+Last Updated: June 17, 2014.
+
+Source:
+  Ocean Data and Information Services,
+  Bedford Institute of Oceanography, DFO, Canada.
+  DataServicesDonnees@dfo-mpo.gc.ca
+
+
+
+  This program was totally re-designed and re-written for
   ODSToolbox Version 2.0. It is not based on Version 1.0.
   In addition the package, classes, methods and functions,
   originally written for Matlab were, re-written again to

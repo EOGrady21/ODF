@@ -3,9 +3,9 @@
   #'
   #' creates an empty list structure to populate and export as ODF
   #'
-  #' @version ODS Toolbox Version: 2.0
+  #'  ODS Toolbox Version: 2.0
   #'
-  #' @update
+  #'
   #' Created: 19-OCT-2016
   #' Updated: 30-NOV-2016
   #'
@@ -13,9 +13,9 @@
   #'
   #'
   #'
-  #' @copyright: 2016, Fisheries and Oceans Canada. All Rights Reserved.
+  #'  2016, Fisheries and Oceans Canada. All Rights Reserved.
   #'
-  #' @example
+  #' @examples
   #'
   #' Usage:  C = gen_odfstruct()
   #'
@@ -30,7 +30,7 @@
   #'
   #' See also CRUISE_EVENT_TO_ORACLE, DATA_TO_ORACLE, ODF_FROM_ORACLE
   #'
-  #'   @update
+  #'
   #'
   #'
   #'   Roger Pettipas (21-JUN-2018)
@@ -42,7 +42,7 @@
   #'   Jeff Jackson (30-NOV-2016)
   #'   - Replaced call to lubridate function now() with the Sys.time() call.
   #'
-  #' Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
+  #' Report any bugs to DataServicesDonnees"at"dfo-mpo.gc.ca
   #' @export
 
 
