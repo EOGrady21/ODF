@@ -43,13 +43,11 @@ parameter header has: type, name, units, code, null_value, print_field_width,
 print_decimal_places, angle_of_Section magnetic_Variation, depth,
 minimum_value, maximum_value, number_valid, number_null
 
-parameter header has: type, name, units, code, null_value, print_field_width,
-print_decimal_places, angle_of_Section magnetic_Variation, depth,
-minimum_value, maximum_value, number_valid, number_null
+add a parameter to an existing ODF structure array (b)
+reads in variable, add a parameter header, cal header and column to the data portion of the ODF
 
-parameter header has: type, name, units, code, null_value, print_field_width,
-print_decimal_places, angle_of_Section magnetic_Variation, depth,
-minimum_value, maximum_value, number_valid, number_null
+add a parameter to an existing ODF structure array (b)
+reads in variable, add a parameter header, cal header and column to the data portion of the ODF
 }
 \details{
 polynomial_cal_header has, parameter_name, calibration_date, application_date,
@@ -57,13 +55,36 @@ number_coefficients, coefficients
 
 data columns should be added in order of parameter headers
 
+parameter header has: type, name, units, code, null_value, print_field_width,
+print_decimal_places, angle_of_Section magnetic_Variation, depth,
+minimum_value, maximum_value, number_valid, number_null
+
 polynomial_cal_header has, parameter_name, calibration_date, application_date,
 number_coefficients, coefficients
 
 data columns should be added in order of parameter headers
 
+parameter header has: type, name, units, code, null_value, print_field_width,
+print_decimal_places, angle_of_Section magnetic_Variation, depth,
+minimum_value, maximum_value, number_valid, number_null
+
 polynomial_cal_header has, parameter_name, calibration_date, application_date,
 number_coefficients, coefficients
 
 data columns should be added in order of parameter headers
+}
+\examples{
+
+b <- gen_odfstruct()
+obj <- read.oce('MCTD****.ODF')
+
+b <- add_parameter(b, obj, VARNAME = 'salinity', cal = TRUE)
+
+
+
+b <- gen_odfstruct()
+obj <- read.oce('MCTD****.ODF')
+
+b <- add_parameter(b, obj, VARNAME = 'salinity', cal = TRUE)
+
 }

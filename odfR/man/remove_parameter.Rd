@@ -2,45 +2,44 @@
 % Please edit documentation in R/remove_parameter.R
 \name{remove_parameter}
 \alias{remove_parameter}
-\title{------------------------------------------------------------------------
-  REMOVE_PARAMETER: Removes a parameter from the oce / ODF object.
-  
-  ODSToolbox Version: 2.0
-  
-  Created: 10-SEP-2015
-  Updated: 22-SEP-2015
-  
-  @author: Jeff Jackson}
+\title{REMOVE_PARAMETER
+  Removes a parameter from the oce / ODF object.}
 \usage{
 remove_parameter(S, code)
 }
 \description{
-@version: 1.0
+ODSToolbox Version: 2.0
 }
 \details{
+Created: 10-SEP-2015
+  Updated: 22-SEP-2015
+
+@author: Jeff Jackson
+
+@version: 1.0
+
 @copyright: Fisheries and Oceans Canada
 
 @summary: Removes a parameter from the oce / ODF object.
-  
-  Usage:  remove_parameter(S, code)
-  
-  Input:
+
+@example
+
+Usage:  remove_parameter(S, code)
+
+Input:
           S: An oce object
        code: A valid GF3 code (ex: code='FFFF_01')
-  
-  Output:  The modified oce object
-  
-  Example:  A = remove_parameter(ODF, 'PSAL_02')
-  
-  Notes:
-  
-  See also: 
-  
-  Updates:
-  
-    Jeff Jackson (21-SEP-2015)
+
+Output:  The modified oce object
+
+Example:  A = remove_parameter(ODF, 'PSAL_02')
+
+
+
+@updates
+
+Jeff Jackson (21-SEP-2015)
     - Fixed a minor error.
-  
-  Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
-  ------------------------------------------------------------------------
+
+Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
 }

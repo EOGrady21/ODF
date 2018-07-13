@@ -1,3 +1,16 @@
+#' Create file name
+#'
+#' Creates standardized ODF file name for any data type
+#'
+#' @author R. Pettipas
+#'
+#' @param odf_obj a list ODF object
+#'
+#' @export
+#'
+#' @return A standardized name for an ODF file based on metadata parameters
+
+
 # R.Pettipas
 # Build an ODF filespec from an ODF object
 #

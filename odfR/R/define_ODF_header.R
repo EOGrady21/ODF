@@ -1,9 +1,11 @@
-#' Defines and returns the header section of an ODF file.
+#'Define ODF header
+#'
+#'   Defines and returns the header section of an ODF file.
 #' Output:
 #'   ODF_HEADER is a cell array containing the definition.
-#' 
+#'
 #'   This tool usually is called by other tools such as ODF read,
-#'   write and edit etc. It is one of the core tools and users 
+#'   write and edit etc. It is one of the core tools and users
 #'   should not make any changes to it.
 #'
 #'   A new block can be added easily to this definition to extend an
@@ -12,25 +14,24 @@
 #'   modified as well.
 #'
 #'   Report any bugs to DataServicesDonnees@@dfo-mpo.gc.ca
-#' 
+#'
 #' ODSToolbox Version: 2.0
 #'
-#' Last Updated: September 3, 2015
-#' 
-#' @export 
-#' @examples
-#' ODF_header <- define_ODF_header()
-#' 
-#' @details 
+#' September 3, 2015
+#'
+#' @export
+#'
+#'
+#' @details
 #' Source:
 #'   Ocean Data and Information Services,
 #'   Bedford Institute of Oceanography, DFO, Canada.
 #'   DataServicesDonnees@@dfo-mpo.gc.ca
-#' 
+#'
 #' @author Yongcun Hu, Patrick Upson
 #'
-#' 
-#' Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
+#'
+#'  Copyright (C) 2006-2014 DFO, Bedford Institute of Oceanography, Canada.
 #' You may distribute under the terms of either the GNU General Public
 #' License or the Apache v2 License, as specified in the README file.
 
@@ -39,7 +40,7 @@ define_ODF_header <- function() {
 	tmp[1,] <- c('ODF_HEADER', 'char', 'mandatory', 'single')
 	tmp[2,] <- c('FILE_SPECIFICATION', 'char', 'mandatory', 'single')
 	ODF <- list(tmp)
-	
+
 	tmp = array("", c(10,4))
 	tmp[1,] <- c('CRUISE_HEADER', 'char', 'mandatory', 'single')
 	tmp[2,] <- c('COUNTRY_INSTITUTE_CODE', 'integer', 'mandatory', 'single')
@@ -52,7 +53,7 @@ define_ODF_header <- function() {
 	tmp[9,] <- c('CRUISE_NAME', 'char', 'mandatory', 'single')
 	tmp[10,] <- c('CRUISE_DESCRIPTION', 'char', 'mandatory', 'single')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(19,4))
 	tmp[1,] <- c('EVENT_HEADER', 'char', 'mandatory', 'single')
 	tmp[2,] <- c('DATA_TYPE', 'char', 'mandatory', 'single')
@@ -86,7 +87,7 @@ define_ODF_header <- function() {
 	tmp[8,] <- c('ICE_THICKNESS', 'numeric', 'mandatory', 'single')
 	tmp[9,] <- c('METEO_COMMENTS', 'char', 'mandatory', 'multiple')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(5,4))
 	tmp[1,] <- c('INSTRUMENT_HEADER', 'char', 'mandatory', 'single')
 	tmp[2,] <- c('INST_TYPE', 'char', 'mandatory', 'single')
@@ -94,14 +95,14 @@ define_ODF_header <- function() {
 	tmp[4,] <- c('SERIAL_NUMBER', 'char', 'mandatory', 'single')
 	tmp[5,] <- c('DESCRIPTION', 'char', 'mandatory', 'single')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(4,4))
 	tmp[1,] <- c('QUALITY_HEADER', 'char', 'optional', 'single')
 	tmp[2,] <- c('QUALITY_DATE', 'char', 'mandatory', 'single')
 	tmp[3,] <- c('QUALITY_TESTS', 'char', 'mandatory', 'multiple')
 	tmp[4,] <- c('QUALITY_COMMENTS', 'char', 'mandatory', 'multiple')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(9,4))
 	tmp[1,] <- c('GENERAL_CAL_HEADER', 'char', 'optional', 'multiple')
 	tmp[2,] <- c('PARAMETER_CODE', 'char', 'mandatory', 'single')
@@ -113,7 +114,7 @@ define_ODF_header <- function() {
 	tmp[8,] <- c('CALIBRATION_EQUATION', 'char', 'mandatory', 'multiple')
 	tmp[9,] <- c('CALIBRATION_COMMENTS', 'char', 'mandatory', 'multiple')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(6,4))
 	tmp[1,] <- c('POLYNOMIAL_CAL_HEADER', 'char', 'optional', 'multiple')
 	tmp[2,] <- c('PARAMETER_NAME', 'char', 'mandatory', 'single')
@@ -122,7 +123,7 @@ define_ODF_header <- function() {
 	tmp[5,] <- c('NUMBER_COEFFICIENTS', 'integer', 'mandatory', 'single')
 	tmp[6,] <- c('COEFFICIENTS', 'numeric', 'mandatory', 'multiple')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(6,4))
 	tmp[1,] <- c('COMPASS_CAL_HEADER', 'char', 'optional', 'multiple')
 	tmp[2,] <- c('PARAMETER_NAME', 'char', 'mandatory', 'single')
@@ -131,13 +132,13 @@ define_ODF_header <- function() {
 	tmp[5,] <- c('DIRECTIONS', 'numeric', 'mandatory', 'multiple')
 	tmp[6,] <- c('CORRECTIONS', 'numeric', 'mandatory', 'multiple')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(3,4))
 	tmp[1,] <- c('HISTORY_HEADER', 'char', 'optional', 'multiple')
 	tmp[2,] <- c('CREATION_DATE', 'char', 'mandatory', 'single')
 	tmp[3,] <- c('PROCESS', 'char', 'mandatory', 'multiple')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(16,4))
 	tmp[1,] <- c('PARAMETER_HEADER', 'char', 'mandatory', 'multiple')
 	tmp[2,] <- c('TYPE', 'char', 'mandatory', 'single')
@@ -156,7 +157,7 @@ define_ODF_header <- function() {
 	tmp[15,] <- c('NUMBER_VALID', 'integer', 'optional', 'single')
 	tmp[16,] <- c('NUMBER_NULL', 'integer', 'optional', 'single')
 	ODF <- c(ODF, list(tmp))
-	
+
 	tmp = array("", c(6,4))
 	tmp[1,] <- c('RECORD_HEADER', 'char', 'mandatory', 'single')
 	tmp[2,] <- c('NUM_CALIBRATION', 'integer', 'optional', 'single')
@@ -165,7 +166,7 @@ define_ODF_header <- function() {
 	tmp[5,] <- c('NUM_CYCLE', 'integer', 'optional', 'single')
 	tmp[6,] <- c('NUM_PARAM', 'integer', 'optional', 'single')
 	ODF <- c(ODF, list(tmp))
-	
+
 	names(ODF) <- c('ODF_HEADER','CRUISE_HEADER','EVENT_HEADER', 'METEO_HEADER',
 	  'INSTRUMENT_HEADER','QUALITY_HEADER','GENERAL_CAL_HEADER','POLYNOMIAL_CAL_HEADER',
 	  'COMPASS_CAL_HEADER','HISTORY_HEADER','PARAMETER_HEADER','RECORD_HEADER')

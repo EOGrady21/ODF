@@ -1,21 +1,3 @@
-####oce2odf####
-
-
-#'Functions which allow tranfer between oce objects and ODF files
-#'
-#'author: Emily Chisholm, emily.chisholm "\@\" dfo-mpo.gc.ca
-#'date: June 28 2018
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-NULL
-
 
 
 
@@ -24,19 +6,21 @@ NULL
 #'creates ODF standard header from metadata within an oce object to be copied and replicated in ODF files
 #'object can subsequently be used in function `oce2odf`
 #'
-#'returns empty odf object with header metadata filled out 
+#'returns empty odf object with header metadata filled out
 #'
 #' @param obj oce object
-
-#note before running please write
-#obj[['event_comments']]
-#obj[['description']]
+#' @export
+#'
+#'
+#' @examples
+#' obj[['event_comments']]
+#' obj[['description']]
 
 
 oce2odfHeader <- function(obj){
-  
+
   b <- gen_odfstruct()
-  
+
   if (inherits(obj) == 'adp'){
     # for ( d in 1:length(obj[['distance']])){
     # b$ODF_HEADER$FILE_SPECIFICATION <- paste('MADCPS', '_', obj[['cruise_number']], '_', obj[['mooring_number']], '_', obj[['serial_number']] , '-', obj[['sensor_depth']] - obj[['distance']][[d]], '.ODF', sep = '')
@@ -50,8 +34,8 @@ oce2odfHeader <- function(obj){
     b$CRUISE_HEADER$PLATFORM <- obj[['platform']]
     b$CRUISE_HEADER$CRUISE_NAME <- obj[['cruise_name']]
     b$CRUISE_HEADER$CRUISE_DESCRIPTION <- obj[['cruise_description']]
-    
-    
+
+
     b$EVENT_HEADER$DATA_TYPE <- obj[['data_type']]
     b$EVENT_HEADER$EVENT_NUMBER <- obj[['mooring_number']]
     b$EVENT_HEADER$EVENT_QUALIFIER1 <- ''
@@ -64,38 +48,42 @@ oce2odfHeader <- function(obj){
     b$EVENT_HEADER$INITIAL_LONGITUDE <- obj[['longitude']]
     b$EVENT_HEADER$END_LATITUDE <- obj[['latitude']]
     b$EVENT_HEADER$END_LONGITUDE <- obj[['longitude']]
-    b$EVENT_HEADER$MIN_DEPTH <- min(obj[['depth']])     #CAUTION THESE ARE ONLY PLACEHOLDERS, EACH FILE SHOULD HAVE 
+    b$EVENT_HEADER$MIN_DEPTH <- min(obj[['depth']])     #CAUTION THESE ARE ONLY PLACEHOLDERS, EACH FILE SHOULD HAVE
     b$EVENT_HEADER$MAX_DEPTH <- max(obj[['depth']])     #THESE VALUES REPLACED BY BIN DEPTH IN THE OCE2ODF FUNCTION
     b$EVENT_HEADER$SAMPLING_INTERVAL <- obj[['sampling_interval']]
     b$EVENT_HEADER$SOUNDING <- obj[['sounding']]
     b$EVENT_HEADER$DEPTH_OFF_BOTTOM  <- max(obj[['depth']]) - obj[['depthMean']]
     b$EVENT_HEADER$EVENT_COMMENTS <- obj[['event_comments']]
-    
-    
+
+
     b$INSTRUMENT_HEADER$INST_TYPE <- obj[['instrumentType']]
     b$INSTRUMENT_HEADER$MODEL <- obj[['model']]
     b$INSTRUMENT_HEADER$SERIAL_NUMBER <- obj[['serialNumber']]
     b$INSTRUMENT_HEADER$DESCRIPTION <- obj[['description']]
-    
+
     return(b)
-    
-    
-    
+
+
+
   }
 }
 #'
+#'convert oce object to ODF
+#'
+#'Currently fully functioning for ADCP data
+#'Accepts an oce class object (adp) and converts into a series of ODF files to
+#'be exported
 #'
 #'
-#'
-#'
-#'
-#'
-#'
+#' @author E. Chisholm
+#'Version 1.0
 #'
 #' @param obj oce object for data to be copied to odf
 #' @param write whether or not to write out all the odf files produced, default
 #'   is TRUE, if false please use binExport to select the bins for which you
 #'   would like to produce ODFs
+#'
+#'   @export
 
 
 
@@ -107,45 +95,45 @@ oce2odf <- function(obj, write = TRUE){
     for( d in 1:length(obj[['distance']] )){
       #caUTION: oce uses snake case, ADCP process uses '_'
       names[[d]] <- paste('MADCPS', '_', obj[['cruise_number']], '_', obj[['mooring_number']], '_', obj[['serialNumber']] , '-',  round(obj[['distance']][[d]], digits = 0), '.ODF', sep = '')
-      
+
     }
     #name variables to export to ODF
     params <- list('u', 'v', 'w', 'errv', 'pgd', 'agc')
-    
+
     u <- obj[['v']][,,1]
     v <- obj[['v']][,,2]
     w <- obj[['v']][,,3]
     errv <- obj[['v']][,,4]
     pgd <- obj[['g', 'numeric']][,,4]
-    agc <- apply(X = obj[['a', 'numeric']], MARGIN = 1:2, FUN = mean, na.rm = TRUE)   
+    agc <- apply(X = obj[['a', 'numeric']], MARGIN = 1:2, FUN = mean, na.rm = TRUE)
    #handle time separately
      sytm <- obj[['time']]
-    
+
     #work on add_parameter to make easier
     #split each data variable into single depth time series
-    
+
       #add each section of data as parameter in loop of odf files by depths
-      
-      #creates data array which matches dimensions of variables, 
+
+      #creates data array which matches dimensions of variables,
     b <- NULL
       for (d in 1: length(obj[['distance']])){
         b[[d]] <- gen_odfstruct()
         b[[d]]$DATA <- matrix(NA,  nrow = length(adp[['time']]),  ncol = length(params))
       }
-    
+
      for (i in 1:length(params)){
         for( d in 1: length(obj[['distance']])){
             eval(parse(text = paste0("b[[d]]$DATA[,i] <- ", params[[i]], "[,d] ")))
-          
+
           }
         }
-      
-    
+
+
     #handle time separately
     for (d in 1:length(obj[['distance']])){
       for(p in params)
       as.data.frame(b[[d]]$DATA)
-      
+
       colnames(b[[d]]$DATA)<- list('EWCT_01', 'NSCT_01','VCSP_01', 'ERRV_01', 'PGDP_01', 'BEAM_01')
     }
     if (!is.null(obj[['time']])){
@@ -160,7 +148,7 @@ oce2odf <- function(obj, write = TRUE){
       gf3[[p]] <- as.gf3(p)
     }
     for ( d in 1:length(obj[['distance']])){
-      
+
       length(b[[d]]$PARAMETER_HEADER) <- length(b[[d]]$PARAMETER_HEADER) + length(params)
       for (i in 1:length(params)){
       b[[d]]$PARAMETER_HEADER[[i]] <- list(
@@ -202,19 +190,19 @@ oce2odf <- function(obj, write = TRUE){
       )
       }
     }
-  
-    
-      
+
+
+
       #parameter header, polynomial cal header (optional), compass cal header
       #FIXME: adds to history header with each action like oce processing log
-      
+
       #add header block to each odf file (standard, same for each file)
-      
+
       for( d in 1:length(obj[['distance']])){
-        
+
         #ODF HEADER
         b[[d]]$ODF_HEADER$FILE_SPECIFICATION <- paste('MADCPS', '_', obj[['cruise_number']], '_', obj[['mooring_number']], '_', obj[['serialNumber']] , '-', (round(obj[['depthMean']] - obj[['distance']][[d]], digits = 0)), sep = '')
-        
+
         #CRUISE HEADER
         b[[d]]$CRUISE_HEADER$COUNTRY_INSTITUTE_CODE <- obj[['country_code']]
         b[[d]]$CRUISE_HEADER$CRUISE_NUMBER <- obj[['cruise_number']]
@@ -225,8 +213,8 @@ oce2odf <- function(obj, write = TRUE){
         b[[d]]$CRUISE_HEADER$PLATFORM <- obj[['platform']]
         b[[d]]$CRUISE_HEADER$CRUISE_NAME <- obj[['cruise_name']]
         b[[d]]$CRUISE_HEADER$CRUISE_DESCRIPTION <- obj[['cruise_description']]
-        
-        
+
+
         b[[d]]$EVENT_HEADER$DATA_TYPE <- obj[['data_type']]
         b[[d]]$EVENT_HEADER$EVENT_NUMBER <- obj[['mooring_number']]
         b[[d]]$EVENT_HEADER$EVENT_QUALIFIER1 <- paste(obj[['serialNumber']],'-',round(obj[['depthMean']] - obj[['distance']][[d]], digits = 0) )
@@ -240,89 +228,94 @@ oce2odf <- function(obj, write = TRUE){
         b[[d]]$EVENT_HEADER$END_LATITUDE <- obj[['latitude']]
         b[[d]]$EVENT_HEADER$END_LONGITUDE <- obj[['longitude']]
         b[[d]]$EVENT_HEADER$MIN_DEPTH <- round(obj[['distance']][d] , digits = 0)
-        b[[d]]$EVENT_HEADER$MAX_DEPTH <- round(obj[['distance']][d] , digits = 0)    
+        b[[d]]$EVENT_HEADER$MAX_DEPTH <- round(obj[['distance']][d] , digits = 0)
         b[[d]]$EVENT_HEADER$SAMPLING_INTERVAL <- obj[['sampling_interval']]
         b[[d]]$EVENT_HEADER$SOUNDING <- obj[['sounding']]
         b[[d]]$EVENT_HEADER$DEPTH_OFF_BOTTOM  <- as.numeric(obj[['sounding']]) - obj[['distance']][d]
         b[[d]]$EVENT_HEADER$EVENT_COMMENTS <- paste(as.character(Sys.Date() , obj[['event_comments']]))
-        
+
         # INSTRUMENT_HEADER
-        
+
         b[[d]]$INSTRUMENT_HEADER$INST_TYPE <-'ADCP'
         b[[d]]$INSTRUMENT_HEADER$MODEL <- obj[['model']]
         b[[d]]$INSTRUMENT_HEADER$SERIAL_NUMBER <- obj[['serialNumber']]
         b[[d]]$INSTRUMENT_HEADER$DESCRIPTION <- obj[['description']]
-        
+
         # RECORD_HEADER
-        
+
         b[[d]]$RECORD_HEADER$NUM_CYCLE <- length(obj[['time']])
         b[[d]]$RECORD_HEADER$NUM_PARAM <- length(params) +1
-        
+
       #delete null headers
   b[[d]]$POLYNOMIAL_CAL_HEADER <- NULL
   b[[d]]$COMPASS_CAL_HEADER <- NULL
   b[[d]]$RECORD_HEADER$NUM_CALIBRATION <- NULL
   b[[d]]$RECORD_HEADER$NUM_SWING <- NULL
       }
-  
-  
+
+
     save(b, file = paste0('MADCPS_', obj[['cruise_number']],'_',  obj[['mooring_number']], '_', obj[['sampling_interval']], '.Rd', sep = ''))
-  
-      
+
+
       #write odf sturctures to odf files
   #doesn't work --- line formatting issue, not skipping to new line
     if (write == TRUE){
-   
+
     for(d in 1:length(obj[['distance']])){
     write_odf( b[[d]],   output_file =paste0(b[[d]]$ODF_HEADER$FILE_SPECIFICATION, '.ODF'))
       print(paste0("Bin", d,"of", length(obj[['distance']]),  "completed", sep = " "))
     }
-    
+
     } else{
       return(b)
-      
+
     }
   }
-     
+
   if(inherits(obj, what = 'ctd') ){
     ;
     ;
   }
-      
+
     }
-    
-    
-    
-  
+
+
+
+
 ####ODF select bin export####
 
 
 #' Select bin export
 #'
+#'Select particular ADCP bins to be exported to ODF files
+#'
+#'
 #' @param obj an ODF structure object with multiple depth bins (produced from oce2odf)
 #' @param bins the bin numbers you wish to export
 #'
-#' @return
+#'
 #' @export
 #'
 #' @examples
-#' ```
+#'
 #' # oce2odf(adp, write = FALSE)
 #' # bins <- list(12:34)
 #' # binExport(obj = b, bins)
-#' ````
+#'
 binExport <- function(obj, bins){
-  
-  
+
+
   for(l in bins){
     write_odf( obj[[l]],   output_file =paste0(obj[[l]]$ODF_HEADER$FILE_SPECIFICATION))
-    
+
   }
 }
 
 
 ####add parameter####
 
+#' Add parameter
+#'
 #' add a parameter to an existing ODF structure array (b)
 #'reads in variable, add a parameter header, cal header and column to the data portion of the ODF
 #'
@@ -340,27 +333,27 @@ binExport <- function(obj, bins){
 #' @param obj oce/ odf (?) object to  pull data and metadata from
 #' @param VARNAME name of parameter (in object data is being pulled from)
 #' @param cal TRUE/ FALSE whether or not to produce a polynomial cal header for same parameter code
-#' 
-#' 
+#'
+#'
 #' @export
-#' 
-#' @examples 
-#' 
-#' ```
+#'
+#' @examples
+#'
+#'
 #' b <- gen_odfstruct()
-#' obj <- read.oce('MCTD****.ODF)
-#' 
+#' obj <- read.oce('MCTD****.ODF')
+#'
 #' b <- add_parameter(b, obj, VARNAME = 'salinity', cal = TRUE)
-#' ````
+#'
 
 
 add_parameter <- function(b, data, VARNAME, cal = FALSE){
-  
+
   gf3 <- as.gf3(VARNAME)
-  
-  
+
+
   length(b$PARAMETER_HEADER) <- length(b$PARAMETER_HEADER) +1
-  
+
   params <- list()
   for (i in length(b$PARAMETR_HEADER)){
     params[[i]] <- b$PARAMETER_HEADER$CODE
@@ -370,7 +363,7 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
   } else{
     gf3$code <- paste(gf3$code, '01', sep = '_')
   }
-  
+
   i <- length(b$PARAMETER_HEADER)
   b$PARAMETER_HEADER[[i]] <-
     list(
@@ -389,26 +382,26 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
       NUMBER_VALID = '',
       NUMBER_NULL = ''
     )
-  
-  
-  
-  
+
+
+
+
   if (cal == TRUE){
     length(b$POLYNOMIAL_CAL_HEADER) <- length(b$POLYNOMIAL_CAL_HEADER) +1
     i <- length(b$POLYNOMIAL_CAL_HEADER)
-    
-    b$POLYNOMIAL_CAL_HEADER[[i]] <- 
+
+    b$POLYNOMIAL_CAL_HEADER[[i]] <-
       list(
-        PARAMETER_NAME = VARNAME, 
-        CALIBRATION_DATE = '', 
-        APPLICATION_DATE = '', 
-        NUMBER_COEFFICIENTS = '', 
+        PARAMETER_NAME = VARNAME,
+        CALIBRATION_DATE = '',
+        APPLICATION_DATE = '',
+        NUMBER_COEFFICIENTS = '',
         COEFFICIENTS = ''
       )
-    
+
   }
-  
-  
+
+
   if (is.null(dim(b$DATA))){
     b$DATA <- matrix(dim = dim(data))
     b$DATA <-  as.matrix(data)
@@ -416,11 +409,11 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
     b$DATA <- cbind(b$DATA, data)
   }
   i <- length(b$DATA[1,])
-  
+
   colnames(b$DATA[[i]]) <- gf3$code
-  
+
   b$DATA <- as.data.frame(b$DATA)
-  
+
   return(b)
 }
 
@@ -433,12 +426,12 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
 #' @return list with GF3 code, def, width, prec and units
 #' @export
 #'
-#' @examples
+#'
 as.gf3 <- function(VARNAME){
-  load("~/roger/gf3defs.RData")
-  
+  load("~/gf3defs.RData")
+
   if (!( VARNAME %in% gf3defs$CODE)){
-    
+
     if (VARNAME == 'u'){
       codevar <- 'EWCT'
     }
@@ -488,21 +481,21 @@ as.gf3 <- function(VARNAME){
   if (VARNAME %in% gf3defs$GF3_CODE){
     codevar <- VARNAME
   }
-  
+
   #add more oce to gf3 code translations
   #eg for ctd, cm, tr, etc
   loc <- gf3defs$GF3_CODE == codevar
   VARNAME <- list(
-    code = gf3defs$GF3_CODE[loc], 
+    code = gf3defs$GF3_CODE[loc],
     def = gf3defs$GF3_DEFINITION[loc],
-    units = gf3defs$UNITS[loc], 
+    units = gf3defs$UNITS[loc],
     width = gf3defs$WIDTH[loc],
     prec = gf3defs$PRECISION[loc]
   )
   return(VARNAME)
 }
 
-  
- 
-  
+
+
+
 

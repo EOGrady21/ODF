@@ -2,21 +2,22 @@
 % Please edit documentation in R/null2na.R
 \name{null2na}
 \alias{null2na}
-\title{-----------------------------------------------------------------------    
-  null2na: Replace null values (-99) with NA in the data of an ODF
-  structure.
-  
-  ODSToolbox Version: 2.0
-  
-  Creation Date: 09-SEP-2015
-  Last Updated: 12-NOV-2015}
+\title{null2na}
 \usage{
 null2na(A)
 }
 \description{
-@author: Jeff Jackson
+Replace null values (-99) with NA in the data of an ODF
+  structure. Substitutes null data with empty strings in an ODF structure.
 }
 \details{
+ODSToolbox Version: 2.0
+
+Creation Date: 09-SEP-2015
+  Last Updated: 12-NOV-2015
+
+@author: Jeff Jackson
+
 @version: 1.0
 
 @copyright: Fisheries and Oceans Canada
@@ -26,7 +27,7 @@ Source:
       Bedford Institute of Oceanography, DFO, Canada.
       DataServicesDonnees@dfo-mpo.gc.ca
 
-@summary: Substitutes null data with empty strings in an ODF structure.
+@example
 
 Usage:
       A = null2na(A)
@@ -40,11 +41,11 @@ Output:
 Example:
       A = null2na(A)
 
-Notes:
 
-See also 
-    
-  Updates:
+
+
+
+@Updates:
 
 Jeff Jackson (22-SEP-2015)
     - Fixed an error.
@@ -52,6 +53,6 @@ Jeff Jackson (22-SEP-2015)
 Jeff Jackson (12-NOV-2015)
     - Fixed a logic error.
 
-Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
-  ------------------------------------------------------------------------
+@bugs
+  Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
 }

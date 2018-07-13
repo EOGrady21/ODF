@@ -1,43 +1,46 @@
-remove_parameter <- function(S, code) {
-#'   ------------------------------------------------------------------------
-#'   REMOVE_PARAMETER: Removes a parameter from the oce / ODF object.
-#'   
+#'   REMOVE_PARAMETER
+#'   Removes a parameter from the oce / ODF object.
+#'
 #'   ODSToolbox Version: 2.0
-#'   
+#'
 #'   Created: 10-SEP-2015
 #'   Updated: 22-SEP-2015
-#'   
+#'
 #'   @author: Jeff Jackson
-#' 
-#'   @version: 1.0 
-#' 
+#'
+#'   @version: 1.0
+#'
 #'   @copyright: Fisheries and Oceans Canada
-#' 
+#'
 #'   @summary: Removes a parameter from the oce / ODF object.
-#'   
+#'
+#'   @example
+#'
 #'   Usage:  remove_parameter(S, code)
-#'   
+#'
 #'   Input:
 #'           S: An oce object
 #'        code: A valid GF3 code (ex: code='FFFF_01')
-#'   
+#'
 #'   Output:  The modified oce object
-#'   
+#'
 #'   Example:  A = remove_parameter(ODF, 'PSAL_02')
-#'   
-#'   Notes:
-#'   
-#'   See also: 
-#'   
-#'   Updates:
-#'   
+#'
+#'
+#'
+#'
+#'   @updates
+#'
+#'
 #'     Jeff Jackson (21-SEP-2015)
 #'     - Fixed a minor error.
-#'   
+#'
 #'   Report any bugs to DataServicesDonnees@dfo-mpo.gc.ca
-#'   ------------------------------------------------------------------------
 
-  # Clear variable values.    
+
+remove_parameter <- function(S, code) {
+
+  # Clear variable values.
   param <- NULL
   cal <- NULL
 
@@ -46,21 +49,21 @@ remove_parameter <- function(S, code) {
 
   # Get the number of parameters.
   np <- length(paramHeaders)
-  
+
   # Phase A: Search the ODF object's to find the code to be removed.
   for (i in 1:np) {
     cp <- paramHeaders[[i]]$CODE
     wp <- paramHeaders[[i]]$WMO_CODE
-    
+
     # Phase B: Remove the parameter if present.
     if (!is.null(cp)) {
       if (identical(cp, code)) {
         # Step 1) Remove data from oce object.
         S@data[i] <- NULL
-  
+
         # Step 2) Remove the Parameter_Header from odfheader.
         S@metadata$odfHeader$PARAMETER_HEADER[i] <- NULL
-        
+
         cat(paste("The code ", code, " has been removed.\n", sep = ""))
       }
     }
@@ -68,15 +71,15 @@ remove_parameter <- function(S, code) {
       if (identical(wp, substr(code,1,4))) {
           # Step 1) Remove data from oce object.
         S@data[i] <- NULL
-        
+
         # Step 2) Remove the Parameter_Header from odfheader.
         S@metadata$odfHeader$PARAMETER_HEADER[i] <- NULL
-        
+
         cat(paste("The code ", code, " has been removed.\n", sep = ""))
       }
-    }    
+    }
   }
-  
+
   paramHeaders <- S@metadata$odfHeader$PARAMETER_HEADER
 
 #   # Step 3) Remove the General_Cal_Header if present.
@@ -96,14 +99,14 @@ remove_parameter <- function(S, code) {
 #     end
 #   end
 #   '''
-#     
+#
 #   # Step 4) Remove the Polynomial_Cal_Header if present.
 #   if S['POLYNOMIAL_CAL_HEADER'] is not None:
 #     npch = len(S['POLYNOMIAL_CAL_HEADER'])
 #     for x in range(0,npch):
 #       print(S['POLYNOMIAL_CAL_HEADER'][x]['PARAMETER_NAME'])
 
-  
+
 #   if isfield(S(i),'Polynomial_Cal_Header') && ~isempty(S(i).Polynomial_Cal_Header)
 #     P = cat(1,S(i).Polynomial_Cal_Header{:});
 #     fields = cat(1,P.Parameter_Name);
@@ -114,17 +117,17 @@ remove_parameter <- function(S, code) {
 #     S(i).Polynomial_Cal_Header = {};
 #     [S(i).Polynomial_Cal_Header{1:length(J)}] = deal(cal{:});
 #     S(i).Record_Header.Num_Calibration = length(S(i).Polynomial_Cal_Header);
-# 
+#
 #     # Step 5) Add a line to the history header to indicate that the parameter
 #     # has been removed.
 #     S = add_history(S, ['The following Parameter was removed from the ODF file: ', code]);
-#   }  
+#   }
 
 #   # Phase C: Try to remove QQQQ field if present.
 #     # Step 1) Remove data.
 #     clear names param;
 #     S(i).Data = rmfield(S(i).Data,code2);
-#     
+#
 #     # Step 2) Remove the Parameter_Header.
 #     for j = 1:length(S(i).Parameter_Header)
 #       names{j} = char(S(i).Parameter_Header{j}.Code);
@@ -136,10 +139,10 @@ remove_parameter <- function(S, code) {
 #     S(i).Parameter_Header = {};
 #     [S(i).Parameter_Header{1:length(J),1}] = deal(param{:});
 #     S(i).Record_Header.Num_Param = length(S(i).Parameter_Header);
-    
+
   # Step 5) Add a line to the history header to indicate that the
   # parameter's accompanying QQQQ field has been removed.
   processingLog(S) <- paste("The following Parameter was removed from the ODF object: ", code, sep = "")
-    
+
   return(S)
 }

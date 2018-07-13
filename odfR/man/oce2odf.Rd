@@ -19,10 +19,20 @@ would like to produce ODFs}
 \item{obj}{oce object for data to be copied to odf}
 
 \item{write}{whether or not to write out all the odf files produced, default
-is TRUE, if false please use binExport to select the bins for which you
-would like to produce ODFs}
+  is TRUE, if false please use binExport to select the bins for which you
+  would like to produce ODFs
+
+  @export}
 }
 \description{
 Produces ODF files from ADCP data set (currently only accepts oce adp object,
 ideally will accept various oce instrument objects)
+
+Currently fully functioning for ADCP data
+Accepts an oce class object (adp) and converts into a series of ODF files to
+be exported
+}
+\author{
+E. Chisholm
+Version 1.0
 }
