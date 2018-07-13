@@ -4,6 +4,9 @@ Version: 0.0.0.9000
 Authors@R: person("Emily", "Chisholm", email = "emily.chisholm@dfo-mpo.gc.ca", role = c("aut", "cre"))
 Description: Converts processed oceanographic data to ODF files, common data format for databases within DFO
 Depends: R (>= 3.4.4)
+Imports: 
+  ADCP, 
+  oce
 License: DFO
 Encoding: UTF-8
 LazyData: true
