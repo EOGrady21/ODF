@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1530293986005.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "13F250D6",
+    "lastKnownWriteTime" : 1531157197,
+    "last_content_update" : 1531157197826,
+    "path" : "~/odf/Odf/read_odf.R",
+    "project_path" : "read_odf.R",
+    "properties" : {
+        "cursorPosition" : "3,32",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 11,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_source"
+}

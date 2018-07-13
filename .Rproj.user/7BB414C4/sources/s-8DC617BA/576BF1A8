@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1530273340820.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "576BF1A8",
+    "lastKnownWriteTime" : 1531241319,
+    "last_content_update" : 1531241319353,
+    "path" : "~/odf/Odf/writeodf_example.R",
+    "project_path" : "writeodf_example.R",
+    "properties" : {
+        "cursorPosition" : "12,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
