@@ -273,9 +273,178 @@ oce2odf <- function(obj, write = TRUE){
   }
 
   if(inherits(obj, what = 'ctd') ){
-    ;
-    ;#FIXME: update to be able to accept ctd data structures
+    params <- names(obj@data)
+    
+    #remove time to handle separately
+    
+    t <- grep(params, pattern = "time")
+    params <- params[-t]
+    
+    
+    
+    
+    #creates data array which matches dimensions of variables,
+    b <- NULL
+    
+    b <- gen_odfstruct()
+    b$DATA <- matrix(NA,  nrow = length(obj[['scan']]),  ncol = length(params))
+    
+    
+    for (i in 1:length(params)){
+      
+      eval(parse(text = paste0("b$DATA[,i] <- obj@data$", params[[i]])))
+      
+      
+    }
+    
+    
+    #handle time separately
+    
+    
+    b$DATA <- as.data.frame(b$DATA)
+    
+    for (i in 1:length(params)){
+      as.gf3(params[[i]])
+    }
+    
+    colnames(b$DATA)<- list('EWCT_01', 'NSCT_01','VCSP_01', 'ERRV_01', 'PGDP_01', 'BEAM_01')
+    
+    if (!is.null(obj[['time']])){
+      SYTM_01 <- as.character(as.POSIXct(obj[['time']], origin = '1970-01-01 00:00:00'))
+      for (d in 1:length(obj[['distance']])){
+        b[[d]]$DATA <- cbind.data.frame(b[[d]]$DATA, SYTM_01)
+      }
+    }
+    
+    gf3 <- list()
+    for( p in params){
+      gf3[[p]] <- as.gf3(p)
+    }
+    for ( d in 1:length(obj[['distance']])){
+      
+      length(b[[d]]$PARAMETER_HEADER) <- length(b[[d]]$PARAMETER_HEADER) + length(params)
+      for (i in 1:length(params)){
+        b[[d]]$PARAMETER_HEADER[[i]] <- list(
+          TYPE = 'SING',
+          NAME = gf3[[params[[i]]]]$def,
+          UNITS = gf3[[i]]$units,
+          CODE = paste(gf3[[i]]$code , '01', sep = '_'),
+          NULL_VALUE = '-1000000',
+          PRINT_FIELD_WIDTH = as.character(gf3[[i]]$width),
+          PRINT_DECIMAL_PLACES = as.character(gf3[[i]]$prec),
+          ANGLE_OF_SECTION = '-1000000',
+          MAGNETIC_VARIATION = '-1000000',
+          DEPTH = round(obj[['depthMean']] - obj[['distance']][[d]], digits = 0),
+          MINIMUM_VALUE = as.character(eval(parse(text = paste0("min(", params[[i]], ", na.rm = TRUE)")))),
+          MAXIMUM_VALUE = as.character(eval(parse(text = paste0("max(", params[[i]], ", na.rm = TRUE)")))),
+          NUMBER_VALID = as.character(eval(parse(text = paste0("length(na.omit(", params[[i]], "[,1]))")))),
+          NUMBER_NULL = as.character(eval(parse(text = paste0("length(", params[[i]], "[,1]) - length(na.omit(" ,params[[i]], "[,1]))"))))
+        )
+      }
+      if ( !is.null(obj[['time']])){
+        s <- as.gf3('sytm')
+        length(b[[d]]$PARAMETER_HEADER) <- length(b[[d]]$PARAMETER_HEADER) + 1
+        i <- length(b[[d]]$PARAMETER_HEADER)
+        b[[d]]$PARAMETER_HEADER[[i]] <- list(
+          TYPE = 'SYTM',
+          NAME = s$def,
+          UNITS = s$units,
+          CODE =  'SYTM_01',
+          NULL_VALUE = '-99',
+          PRINT_FIELD_WIDTH = s$width,
+          PRINT_DECIMAL_PLACES = s$prec,
+          ANGLE_OF_SECTION = '-99',
+          MAGNETIC_VARIATION = '-99',
+          DEPTH = '0',
+          MINIMUM_VALUE = toupper(strftime(min(as.character(SYTM_01), na.rm = TRUE),format='%d-%b-%Y %T.00',tz="UTC")),
+          MAXIMUM_VALUE = toupper(strftime(max(as.character(SYTM_01), na.rm = TRUE),format='%d-%b-%Y %T.00',tz="UTC")),
+          NUMBER_VALID = length(na.omit(SYTM_01)),
+          NUMBER_NULL = length(SYTM_01) - length(na.omit(SYTM_01))
+        )
+      }
+    }
+    
+    
+    
+    #parameter header, polynomial cal header (optional), compass cal header
+    #FIXME: adds to history header with each action like oce processing log
+    
+    #add header block to each odf file (standard, same for each file)
+    
+    for( d in 1:length(obj[['distance']])){
+      
+      #ODF HEADER
+      b[[d]]$ODF_HEADER$FILE_SPECIFICATION <- paste('MADCPS', '_', obj[['cruise_number']], '_', obj[['mooring_number']], '_', obj[['serialNumber']] , '-', (round(obj[['depthMean']] - obj[['distance']][[d]], digits = 0)), sep = '')
+      
+      #CRUISE HEADER
+      b[[d]]$CRUISE_HEADER$COUNTRY_INSTITUTE_CODE <- obj[['country_code']]
+      b[[d]]$CRUISE_HEADER$CRUISE_NUMBER <- obj[['cruise_number']]
+      b[[d]]$CRUISE_HEADER$ORGANIZATION <- obj[['organization']]
+      b[[d]]$CRUISE_HEADER$CHIEF_SCIENTIST <- obj[['chief_scientist']]
+      b[[d]]$CRUISE_HEADER$START_DATE <- toupper(strftime(obj[['time_coverage_start']],format='%d-%b-%Y %T.00',tz="UTC"))
+      b[[d]]$CRUISE_HEADER$END_DATE <- toupper(strftime(obj[['time_coverage_end']],format='%d-%b-%Y %T.00',tz="UTC"))
+      b[[d]]$CRUISE_HEADER$PLATFORM <- obj[['platform']]
+      b[[d]]$CRUISE_HEADER$CRUISE_NAME <- obj[['cruise_name']]
+      b[[d]]$CRUISE_HEADER$CRUISE_DESCRIPTION <- obj[['cruise_description']]
+      
+      
+      b[[d]]$EVENT_HEADER$DATA_TYPE <- obj[['data_type']]
+      b[[d]]$EVENT_HEADER$EVENT_NUMBER <- obj[['mooring_number']]
+      b[[d]]$EVENT_HEADER$EVENT_QUALIFIER1 <- paste(obj[['serialNumber']],'-',round(obj[['depthMean']] - obj[['distance']][[d]], digits = 0) )
+      b[[d]]$EVENT_HEADER$EVENT_QUALIFIER2 <- obj[['sampling_interval']]
+      b[[d]]$EVENT_HEADER$CREATION_DATE <- Sys.Date()
+      b[[d]]$EVENT_HEADER$ORIG_CREATION_DATE <- toupper(strftime(Sys.Date(),format='%d-%b-%Y %T.00',tz="UTC"))
+      b[[d]]$EVENT_HEADER$START_DATE_TIME <- toupper(strftime(obj[['time_coverage_start']],format='%d-%b-%Y %T.00',tz="UTC"))
+      b[[d]]$EVENT_HEADER$END_DATE_TIME <- toupper(strftime(obj[['time_coverage_end']],format='%d-%b-%Y %T.00',tz="UTC"))
+      b[[d]]$EVENT_HEADER$INITIAL_LATITUDE <- obj[['latitude']]
+      b[[d]]$EVENT_HEADER$INITIAL_LONGITUDE <- obj[['longitude']]
+      b[[d]]$EVENT_HEADER$END_LATITUDE <- obj[['latitude']]
+      b[[d]]$EVENT_HEADER$END_LONGITUDE <- obj[['longitude']]
+      b[[d]]$EVENT_HEADER$MIN_DEPTH <- round(obj[['distance']][d] , digits = 0)
+      b[[d]]$EVENT_HEADER$MAX_DEPTH <- round(obj[['distance']][d] , digits = 0)
+      b[[d]]$EVENT_HEADER$SAMPLING_INTERVAL <- obj[['sampling_interval']]
+      b[[d]]$EVENT_HEADER$SOUNDING <- obj[['sounding']]
+      b[[d]]$EVENT_HEADER$DEPTH_OFF_BOTTOM  <- as.numeric(obj[['sounding']]) - obj[['distance']][d]
+      b[[d]]$EVENT_HEADER$EVENT_COMMENTS <- paste(as.character(Sys.Date() , obj[['event_comments']]))
+      
+      # INSTRUMENT_HEADER
+      
+      b[[d]]$INSTRUMENT_HEADER$INST_TYPE <-'ADCP'
+      b[[d]]$INSTRUMENT_HEADER$MODEL <- obj[['model']]
+      b[[d]]$INSTRUMENT_HEADER$SERIAL_NUMBER <- obj[['serialNumber']]
+      b[[d]]$INSTRUMENT_HEADER$DESCRIPTION <- obj[['description']]
+      
+      # RECORD_HEADER
+      
+      b[[d]]$RECORD_HEADER$NUM_CYCLE <- length(obj[['time']])
+      b[[d]]$RECORD_HEADER$NUM_PARAM <- length(params) +1
+      
+      #delete null headers
+      b[[d]]$POLYNOMIAL_CAL_HEADER <- NULL
+      b[[d]]$COMPASS_CAL_HEADER <- NULL
+      b[[d]]$RECORD_HEADER$NUM_CALIBRATION <- NULL
+      b[[d]]$RECORD_HEADER$NUM_SWING <- NULL
+    }
+    
+    
+    save(b, file = paste0('MADCPS_', obj[['cruise_number']],'_',  obj[['mooring_number']], '_', obj[['sampling_interval']], '.Rd', sep = ''))
+    
+    
+    #write odf sturctures to odf files
+    #doesn't work --- line formatting issue, not skipping to new line
+    if (write == TRUE){
+      
+      for(d in 1:length(obj[['distance']])){
+        write_odf( b[[d]],   output_file =paste0(b[[d]]$ODF_HEADER$FILE_SPECIFICATION, '.ODF'))
+        print(paste0("Bin", d,"of", length(obj[['distance']]),  "completed", sep = " "))
+      }
+      
+    } else{
+      return(b)
+      
+    }
   }
+  
 
     }
 
