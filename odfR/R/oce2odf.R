@@ -78,7 +78,9 @@ oce2odfHeader <- function(obj){
 #'attempting to accept mctd, mtr, mcm
 #'
 #'In order to function requires certain metadata items
-#' *depthMean
+#' * depthMean
+#' * time_coverage_start
+#' * time_coverage_end
 #'
 #'
 #' @author E. Chisholm
@@ -419,8 +421,8 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
       b$EVENT_HEADER$INITIAL_LONGITUDE <- obj[['longitude']]
       b$EVENT_HEADER$END_LATITUDE <- obj[['latitude']]
       b$EVENT_HEADER$END_LONGITUDE <- obj[['longitude']]
-      b$EVENT_HEADER$MIN_DEPTH <- min(obj[['depth']] )
-      b$EVENT_HEADER$MAX_DEPTH <- max(obj[['depth']])
+      b$EVENT_HEADER$MIN_DEPTH <- obj[['depthMin']] 
+      b$EVENT_HEADER$MAX_DEPTH <- obj[['depthMax']]
       b$EVENT_HEADER$SAMPLING_INTERVAL <- obj[['sampling_interval']]
       b$EVENT_HEADER$SOUNDING <- obj[['sounding']]
       b$EVENT_HEADER$DEPTH_OFF_BOTTOM  <- as.numeric(obj[['sounding']]) - min(obj[['depth']])
