@@ -74,6 +74,12 @@ oce2odfHeader <- function(obj){
 #'Accepts an oce class object (adp) and converts into a series of ODF files to
 #'be exported
 #'
+#'WIP: converting other moored instruments from oce objects to odf
+#'attempting to accept mctd, mtr, mcm
+#'
+#'In order to function requires certain metadata items
+#' *depthMean
+#'
 #'
 #' @author E. Chisholm
 #'Version 1.0
@@ -307,6 +313,11 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
     
     b$DATA <- as.data.frame(b$DATA)
     
+    gf3 <- list()
+    for (i in 1:length(params)){
+      gf3[[i]] <- as.gf3(params[[i]])
+    }
+    
 
     gfnames <- list()
     for (i in 1:length(params)){
@@ -343,10 +354,10 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
           ANGLE_OF_SECTION = '-1000000',
           MAGNETIC_VARIATION = '-1000000',
           DEPTH = round(obj[['depthMean']], digits = 0),
-          MINIMUM_VALUE = as.character(eval(parse(text = paste0("min(obj@data[[", params[[i]], "]], na.rm = TRUE)")))),
-          MAXIMUM_VALUE = as.character(eval(parse(text = paste0("max(obj@data[[", params[[i]], "]], na.rm = TRUE)")))),
-          NUMBER_VALID = as.character(eval(parse(text = paste0("length(na.omit(obj@data[[", params[[i]], "]]))")))),
-          NUMBER_NULL = as.character(eval(parse(text = paste0("length(obj@data[[", params[[i]], "]]) - length(na.omit(obj@data[[" ,params[[i]], "]]))"))))
+          MINIMUM_VALUE = as.character(eval(parse(text = paste0("min(obj@data[['", params[[i]], "']], na.rm = TRUE)")))),
+          MAXIMUM_VALUE = as.character(eval(parse(text = paste0("max(obj@data[['", params[[i]], "']], na.rm = TRUE)")))),
+          NUMBER_VALID = as.character(eval(parse(text = paste0("length(na.omit(obj@data[['", params[[i]], "']]))")))),
+          NUMBER_NULL = as.character(eval(parse(text = paste0("length(obj@data[['", params[[i]], "']]) - length(na.omit(obj@data[['" ,params[[i]], "']]))"))))
         )
       }
       if ( !is.null(obj[['time']])){
