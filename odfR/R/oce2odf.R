@@ -87,6 +87,9 @@ oce2odfHeader <- function(obj){
 #' * serialNumber
 #' * mooring_number
 #' * cruise_number
+#' 
+#' Examples of instrument codes: MADCPS (Moored ADCP), MCTD (moored CTD), MTR
+#' (Moored temperature recorder), MCM (moored current meter)
 #'
 #'
 #' @author E. Chisholm
@@ -96,6 +99,7 @@ oce2odfHeader <- function(obj){
 #' @param write whether or not to write out all the odf files produced, default
 #'   is TRUE, if false please use binExport to select the bins for which you
 #'   would like to produce ODFs
+#' @param inst_code instrument code acronym for file name
 #'
 #'   @export
 
