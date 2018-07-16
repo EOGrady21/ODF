@@ -272,7 +272,9 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
     }
   }
 
+
   if(inherits(obj, what != 'adp') ){
+
     params <- names(obj@data)
     
     #remove time to handle separately
@@ -287,7 +289,9 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
     b <- NULL
     
     b <- gen_odfstruct()
+
     b$DATA <- matrix(NA,  nrow = length(obj[['time']]),  ncol = length(params))
+
     
     
     for (i in 1:length(params)){
@@ -303,11 +307,7 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
     
     b$DATA <- as.data.frame(b$DATA)
     
-    gf3 <- list()
-    for (i in 1:length(params)){
-      gf3[[i]] <- as.gf3(params[[i]])
-    }
-    
+
     gfnames <- list()
     for (i in 1:length(params)){
       gfnames[[i]] <- gf3[[i]][['code']]
@@ -396,42 +396,42 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
       b$CRUISE_HEADER$CRUISE_DESCRIPTION <- obj[['cruise_description']]
       
       
-      b[[d]]$EVENT_HEADER$DATA_TYPE <- obj[['data_type']]
-      b[[d]]$EVENT_HEADER$EVENT_NUMBER <- obj[['mooring_number']]
-      b[[d]]$EVENT_HEADER$EVENT_QUALIFIER1 <- obj[['serialNumber']] 
-      b[[d]]$EVENT_HEADER$EVENT_QUALIFIER2 <- obj[['sampling_interval']]
-      b[[d]]$EVENT_HEADER$CREATION_DATE <- Sys.Date()
-      b[[d]]$EVENT_HEADER$ORIG_CREATION_DATE <- toupper(strftime(Sys.Date(),format='%d-%b-%Y %T.00',tz="UTC"))
-      b[[d]]$EVENT_HEADER$START_DATE_TIME <- toupper(strftime(obj[['time_coverage_start']],format='%d-%b-%Y %T.00',tz="UTC"))
-      b[[d]]$EVENT_HEADER$END_DATE_TIME <- toupper(strftime(obj[['time_coverage_end']],format='%d-%b-%Y %T.00',tz="UTC"))
-      b[[d]]$EVENT_HEADER$INITIAL_LATITUDE <- obj[['latitude']]
-      b[[d]]$EVENT_HEADER$INITIAL_LONGITUDE <- obj[['longitude']]
-      b[[d]]$EVENT_HEADER$END_LATITUDE <- obj[['latitude']]
-      b[[d]]$EVENT_HEADER$END_LONGITUDE <- obj[['longitude']]
-      b[[d]]$EVENT_HEADER$MIN_DEPTH <- min(obj[['depth']] )
-      b[[d]]$EVENT_HEADER$MAX_DEPTH <- max(obj[['depth']])
-      b[[d]]$EVENT_HEADER$SAMPLING_INTERVAL <- obj[['sampling_interval']]
-      b[[d]]$EVENT_HEADER$SOUNDING <- obj[['sounding']]
-      b[[d]]$EVENT_HEADER$DEPTH_OFF_BOTTOM  <- as.numeric(obj[['sounding']]) - min(obj[['depth']])
-      b[[d]]$EVENT_HEADER$EVENT_COMMENTS <- paste(as.character(Sys.Date() , obj[['event_comments']]))
+      b$EVENT_HEADER$DATA_TYPE <- obj[['data_type']]
+      b$EVENT_HEADER$EVENT_NUMBER <- obj[['mooring_number']]
+      b$EVENT_HEADER$EVENT_QUALIFIER1 <- obj[['serialNumber']] 
+      b$EVENT_HEADER$EVENT_QUALIFIER2 <- obj[['sampling_interval']]
+      b$EVENT_HEADER$CREATION_DATE <- Sys.Date()
+      b$EVENT_HEADER$ORIG_CREATION_DATE <- toupper(strftime(Sys.Date(),format='%d-%b-%Y %T.00',tz="UTC"))
+      b$EVENT_HEADER$START_DATE_TIME <- toupper(strftime(obj[['time_coverage_start']],format='%d-%b-%Y %T.00',tz="UTC"))
+      b$EVENT_HEADER$END_DATE_TIME <- toupper(strftime(obj[['time_coverage_end']],format='%d-%b-%Y %T.00',tz="UTC"))
+      b$EVENT_HEADER$INITIAL_LATITUDE <- obj[['latitude']]
+      b$EVENT_HEADER$INITIAL_LONGITUDE <- obj[['longitude']]
+      b$EVENT_HEADER$END_LATITUDE <- obj[['latitude']]
+      b$EVENT_HEADER$END_LONGITUDE <- obj[['longitude']]
+      b$EVENT_HEADER$MIN_DEPTH <- min(obj[['depth']] )
+      b$EVENT_HEADER$MAX_DEPTH <- max(obj[['depth']])
+      b$EVENT_HEADER$SAMPLING_INTERVAL <- obj[['sampling_interval']]
+      b$EVENT_HEADER$SOUNDING <- obj[['sounding']]
+      b$EVENT_HEADER$DEPTH_OFF_BOTTOM  <- as.numeric(obj[['sounding']]) - min(obj[['depth']])
+      b$EVENT_HEADER$EVENT_COMMENTS <- paste(as.character(Sys.Date() , obj[['event_comments']]))
       
       # INSTRUMENT_HEADER
       
-      b[[d]]$INSTRUMENT_HEADER$INST_TYPE <- inst_code
-      b[[d]]$INSTRUMENT_HEADER$MODEL <- obj[['model']]
-      b[[d]]$INSTRUMENT_HEADER$SERIAL_NUMBER <- obj[['serialNumber']]
-      b[[d]]$INSTRUMENT_HEADER$DESCRIPTION <- obj[['description']]
+      b$INSTRUMENT_HEADER$INST_TYPE <- inst_code
+      b$INSTRUMENT_HEADER$MODEL <- obj[['model']]
+      b$INSTRUMENT_HEADER$SERIAL_NUMBER <- obj[['serialNumber']]
+      b$INSTRUMENT_HEADER$DESCRIPTION <- obj[['description']]
       
       # RECORD_HEADER
       
-      b[[d]]$RECORD_HEADER$NUM_CYCLE <- length(obj[['time']])
-      b[[d]]$RECORD_HEADER$NUM_PARAM <- length(params) +1
+      b$RECORD_HEADER$NUM_CYCLE <- length(obj[['time']])
+      b$RECORD_HEADER$NUM_PARAM <- length(params) +1
       
       #delete null headers
-      b[[d]]$POLYNOMIAL_CAL_HEADER <- NULL
-      b[[d]]$COMPASS_CAL_HEADER <- NULL
-      b[[d]]$RECORD_HEADER$NUM_CALIBRATION <- NULL
-      b[[d]]$RECORD_HEADER$NUM_SWING <- NULL
+      b$POLYNOMIAL_CAL_HEADER <- NULL
+      b$COMPASS_CAL_HEADER <- NULL
+      b$RECORD_HEADER$NUM_CALIBRATION <- NULL
+      b$RECORD_HEADER$NUM_SWING <- NULL
     
     
     
