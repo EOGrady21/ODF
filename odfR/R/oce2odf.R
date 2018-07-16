@@ -274,7 +274,7 @@ oce2odf <- function(obj, write = TRUE){
 
   if(inherits(obj, what = 'ctd') ){
     ;
-    ;
+    ;#FIXME: update to be able to accept ctd data structures
   }
 
     }
