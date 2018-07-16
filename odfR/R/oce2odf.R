@@ -428,7 +428,7 @@ add_parameter <- function(b, data, VARNAME, cal = FALSE){
 #'
 #'
 as.gf3 <- function(VARNAME){
-  load("~/gf3defs.RData")
+  load("gf3defs.RData")
 
   if (!( VARNAME %in% gf3defs$CODE)){
 
