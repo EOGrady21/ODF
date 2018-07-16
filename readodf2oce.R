@@ -18,3 +18,10 @@ oce <- new('oce')
 oce@data <- d@data
 oce@metadata <- d@metadata
 
+
+
+f <- read.odf(file = 'C:/Users/ChisholmE/Documents/sample files/mctd/MCTD_HUD2015006_1897_11688_1800.ODF')
+mctd <- new('oce')
+mctd@data <- f@data
+mctd@metadata <- f@metadata
+
