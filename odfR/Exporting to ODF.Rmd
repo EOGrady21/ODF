@@ -1,0 +1,76 @@
+---
+title: "Exporting to ODF"
+author: "Emily Chisholm"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+##Using the odfR package
+
+####Acknowledgement
+  This package is an updated version of 'ODF_R' which was developed by the ODIS team at BIO, mainly by Jeff Jackson and Patrick Upson. Many of these functions have remained the same and a few have been updated along with documentation to make an easily accesible package. 
+  This package also heavily relies on the oce package which makes many of the functions simpler due to standard object attributes
+
+####About ODF
+Ocean Data Format (ODF) files are used primarily by Department of Fisheries and Oceans (DFO). This package was developed at Bedford institute of Oceanography (BIO) in order to handle ODF files and ease processing in R rather than MatLab. ODF files are written as text files with extension (.ODF). This makes them easy to read and access as well as edit. ODF is the primary file type of archived data at BIO and so it is critical to maintain ODF standards so that archives can be consistent. 
+
+ODF format specifications can be found in documentation at BIO. For more information and links please see "ODF in R" document. 
+
+####Usage
+
+This package can be used to export any data file to ODF but is specially designed to streamline the process of exporting Moored data files to ODF from oce objects. 
+
+####Capabilities
+
+This package can export any processed data frame to an ODF file as long as the correct metadata is avaialble. 
+
+A typical workflow for producing ODFs (which are not compatible with oce2odf- such as profile CTD) might look as follows
+
+```{r eval = FALSE}
+#generate ODF structure (appears as list object)
+b <- gen_odfstruct()
+
+#populate headers
+b$ODF_HEADER$FILE_SPECIFICATION <- 'MANUALLY TYPE METADATA HERE'
+b$CRUISE_HEADER$CRUISE_NUMBER <- 'TYPE CRUISE NUMBER HERE'
+
+
+#insert data set
+b$DATA <- as.data.frame(MATRIX OF DATA)
+
+#write out ODF
+write_odf(b, output_file = 'FILENAME.ODF')
+
+```
+
+###Writing ODF with oce2odf
+
+This function `oce2odf()` simplifies the process of exporting ODF files by automatically inserting metadata into header slots based on the standard format of oce objects. 
+
+To ensure proper export, please make sure that your oce object contains the following metadata parameters which may not be included in standard objects
+
+ * depthMean
+ * time_coverage_start
+ * time_coverage_end
+ * depthMin
+ * depthMax
+ * event_comments
+ * serialNumber
+ * mooring_number
+ * cruise_number
+
+With these metadata inserted into the object using `oceSetMetadata`, you can then run the following commands to export to ODF. Note if the function oce2odf is not appearing, use 'ctrl +shift +L' to load all functions. 
+
+```{r eval = FALSE}
+oce2odf(b, write = TRUE, inst_code = 'MCTD')
+
+```
+A list of instrument codes can be found in `?oce2odf`
+
+
+
+
