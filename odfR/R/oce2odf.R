@@ -479,9 +479,22 @@ as.gf3 <- function(VARNAME){
     if (VARNAME == 'pressure'){
       codevar <- 'PRES'
     }
+    if (VARNAME == 'scan'){
+      codevar <- 'CNTR'
+    }
+    if (VARNAME == 'depth'){
+      codevar <- 'DEPH'
+    }
+    if (VARNAME == 'flag'){
+      codevar <- 'FFFF'
+    }
   }
   if (VARNAME %in% gf3defs$GF3_CODE){
     codevar <- VARNAME
+  }
+  if (is.null(codevar)){
+    warning(paste("Could not find variable code for", VARNAME))
+    stop()
   }
 
   #add more oce to gf3 code translations
