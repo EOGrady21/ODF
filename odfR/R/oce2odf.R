@@ -83,6 +83,7 @@ oce2odfHeader <- function(obj){
 #' * time_coverage_end
 #' * depthMin
 #' * depthMax
+#' * event_comments
 #'
 #'
 #' @author E. Chisholm
