@@ -273,7 +273,7 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
   }
 
 
-  if(inherits(obj, what != 'adp') ){
+  if (!inherits(obj, what = 'adp') ){
 
     params <- names(obj@data)
     
