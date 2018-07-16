@@ -5,9 +5,9 @@
 \alias{oce2odf}
 \title{oce2odf}
 \usage{
-oce2odf(obj, write = TRUE)
+oce2odf(obj, write = TRUE, inst_code = NULL)
 
-oce2odf(obj, write = TRUE)
+oce2odf(obj, write = TRUE, inst_code = NULL)
 }
 \arguments{
 \item{obj}{oce object for data to be copied to odf}
@@ -31,6 +31,21 @@ ideally will accept various oce instrument objects)
 Currently fully functioning for ADCP data
 Accepts an oce class object (adp) and converts into a series of ODF files to
 be exported
+}
+\details{
+WIP: converting other moored instruments from oce objects to odf
+attempting to accept mctd, mtr, mcm
+
+In order to function requires certain metadata items
+* depthMean
+* time_coverage_start
+* time_coverage_end
+* depthMin
+* depthMax
+* event_comments
+* serialNumber
+* mooring_number
+* cruise_number
 }
 \author{
 E. Chisholm
