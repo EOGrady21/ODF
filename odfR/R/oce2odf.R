@@ -84,9 +84,9 @@ oce2odfHeader <- function(obj){
 #' * depthMin
 #' * depthMax
 #' * event_comments
-#' * serial_number
+#' * serialNumber
 #' * mooring_number
-#' * 
+#' * cruise_number
 #'
 #'
 #' @author E. Chisholm
