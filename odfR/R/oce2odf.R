@@ -307,6 +307,11 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
     
     b$DATA <- as.data.frame(b$DATA)
     
+    gf3 <- list()
+    for (i in 1:length(params)){
+      gf3[[i]] <- as.gf3(params[[i]])
+    }
+    
 
     gfnames <- list()
     for (i in 1:length(params)){
