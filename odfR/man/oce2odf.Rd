@@ -16,9 +16,7 @@ oce2odf(obj, write = TRUE, inst_code = NULL)
 is TRUE, if false please use binExport to select the bins for which you
 would like to produce ODFs}
 
-\item{inst_code}{instrument code acronym for file name
-
-  @export}
+\item{inst_code}{instrument code acronym for file name}
 
 \item{obj}{oce object for data to be copied to odf}
 
@@ -35,8 +33,9 @@ Accepts an oce class object (adp) and converts into a series of ODF files to
 be exported
 }
 \details{
-WIP: converting other moored instruments from oce objects to odf
-attempting to accept mctd, mtr, mcm
+Can also accept other moored instruments and convert from oce objects to odf
+including mctd, mtr and mcm
+
 
 In order to function requires certain metadata items
 * depthMean

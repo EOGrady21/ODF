@@ -74,10 +74,22 @@ oce2odfHeader <- function(obj){
 #'Accepts an oce class object (adp) and converts into a series of ODF files to
 #'be exported
 #'
-#'WIP: converting other moored instruments from oce objects to odf
-#'attempting to accept mctd, mtr, mcm
+#'Can also accept other moored instruments and convert from oce objects to odf
+#' including mctd, mtr and mcm
 #'
-#'In order to function requires certain metadata items
+
+#'
+#' @author E. Chisholm
+#'Version 1.0
+#'
+#' @param obj oce object for data to be copied to odf
+#' @param write whether or not to write out all the odf files produced, default
+#'   is TRUE, if false please use binExport to select the bins for which you
+#'   would like to produce ODFs
+#' @param inst_code instrument code acronym for file name
+#'
+#'@details 
+#' In order to function requires certain metadata items
 #' * depthMean
 #' * time_coverage_start
 #' * time_coverage_end
@@ -91,15 +103,6 @@ oce2odfHeader <- function(obj){
 #' Examples of instrument codes: MADCPS (Moored ADCP), MCTD (moored CTD), MTR
 #' (Moored temperature recorder), MCM (moored current meter)
 #'
-#'
-#' @author E. Chisholm
-#'Version 1.0
-#'
-#' @param obj oce object for data to be copied to odf
-#' @param write whether or not to write out all the odf files produced, default
-#'   is TRUE, if false please use binExport to select the bins for which you
-#'   would like to produce ODFs
-#' @param inst_code instrument code acronym for file name
 #'
 #' @export
 
