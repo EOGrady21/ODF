@@ -84,6 +84,9 @@ oce2odfHeader <- function(obj){
 #' * depthMin
 #' * depthMax
 #' * event_comments
+#' * serial_number
+#' * mooring_number
+#' * 
 #'
 #'
 #' @author E. Chisholm
@@ -345,7 +348,7 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
     
     
     
-     for(i in 1:length(params)){
+     
       length(b$PARAMETER_HEADER) <- length(b$PARAMETER_HEADER) + length(params)
       for (i in 1:length(params)){
         b$PARAMETER_HEADER[[i]] <- list(
@@ -386,7 +389,7 @@ oce2odf <- function(obj, write = TRUE, inst_code =NULL){
           NUMBER_NULL = length(SYTM_01) - length(na.omit(SYTM_01))
         )
       }
-    }
+    
     
     
     
