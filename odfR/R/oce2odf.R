@@ -664,6 +664,9 @@ as.gf3 <- function(VARNAME){
     if (VARNAME == 'flag'){
       codevar <- 'FFFF'
     }
+    if (VARNAME == 'conductivity'){
+      codevar <- 'CNDC'
+    }
   }
   if (VARNAME %in% gf3defs$GF3_CODE){
     codevar <- VARNAME
